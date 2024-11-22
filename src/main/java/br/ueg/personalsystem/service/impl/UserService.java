@@ -38,31 +38,16 @@ public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO
 
     @Override
     protected void validateToMapCreate(UserRequestDTO dto, List<Message> messagesToThrow) {
-        this.validatePassword(dto, messagesToThrow);
-        this.validateEmail(dto,messagesToThrow);
+        this.validateAnnotations(dto, messagesToThrow);
     }
 
     @Override
     protected void validateToMapUpdate(UserRequestDTO dto, List<Message> messagesToThrow) {
-        this.validatePassword(dto, messagesToThrow);
-        this.validateEmail(dto,messagesToThrow);
+        this.validateAnnotations(dto, messagesToThrow);
     }
 
-    private void validatePassword(UserRequestDTO dto, List<Message> messagesToThrow) {
-        Map<String, List<ErrorEnum>> mapErrors = ReflectionUtil.validatePassword(dto);
-        if (!mapErrors.isEmpty()) {
-            for (String fieldKey : mapErrors.keySet()) {
-                for (ErrorEnum errorEnum : mapErrors.get(fieldKey)) {
-                    messagesToThrow.add(new Message(errorEnum, fieldKey));
-                }
-            }
-        }
-        if (!dto.getPassword().equals(dto.getConfirmPassword()))
-            messagesToThrow.add(new Message(ErrorEnum.PASSWORDS_DIFFERENT));
-    }
-
-    private void validateEmail(UserRequestDTO dto, List<Message> messagesToThrow) {
-        Map<String, List<ErrorEnum>> mapErrors = ReflectionUtil.validateEmail(dto);
+    private void validateAnnotations(Object object, List<Message> messagesToThrow) {
+        Map<String, List<ErrorEnum>> mapErrors = ReflectionUtil.validateAnnotations(object);
         if (!mapErrors.isEmpty()) {
             for (String fieldKey : mapErrors.keySet()) {
                 for (ErrorEnum errorEnum : mapErrors.get(fieldKey)) {

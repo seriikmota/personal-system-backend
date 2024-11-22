@@ -37,7 +37,12 @@ public class AppStartupRunner implements ApplicationRunner {
                     "ROLE_USER_READ",
                     "ROLE_USER_UPDATE",
                     "ROLE_USER_DELETE",
-                    "ROLE_USER_LISTALL");
+                    "ROLE_USER_LISTALL",
+                    "ROLE_PATIENT_CREATE",
+                    "ROLE_PATIENT_READ",
+                    "ROLE_PATIENT_UPDATE",
+                    "ROLE_PATIENT_DELETE",
+                    "ROLE_PATIENT_LISTALL");
 
             List<Role> roleList = new ArrayList<>();
             for (String role : roles) {
