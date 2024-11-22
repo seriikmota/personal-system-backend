@@ -1,4 +1,4 @@
-package br.ueg.personal_system;
+package br.ueg.personalsystem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
