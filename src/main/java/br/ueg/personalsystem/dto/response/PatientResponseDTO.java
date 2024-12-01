@@ -16,6 +16,7 @@ public class PatientResponseDTO {
     private Long id;
     private String name;
     private String cpf;
+    private AddressResponseDTO address;
     private LocalDate birthDate;
     private String gender;
     private String maritalStatus;
@@ -24,6 +25,7 @@ public class PatientResponseDTO {
     private String emergencyNumber;
     private String profession;
     private Double valueForHour;
+    private String healthPlan;
     private Boolean enabled;
     private LocalDateTime createdAt;
 }

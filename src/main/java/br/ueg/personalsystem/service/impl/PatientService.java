@@ -15,7 +15,6 @@ import br.ueg.personalsystem.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +25,12 @@ public class PatientService extends AbstractService<PatientRequestDTO, PatientRe
     @Override
     protected void prepareToCreate(Patient data) {
         data.setCreatedAt(LocalDateTime.now());
+        data.getAddress().setPatient(data);
     }
 
     @Override
     protected void prepareToUpdate(Patient dataDB) {
-
+        dataDB.getAddress().setPatient(dataDB);
     }
 
     @Override
@@ -42,12 +42,18 @@ public class PatientService extends AbstractService<PatientRequestDTO, PatientRe
     protected void prepareToMapCreate(PatientRequestDTO dto) {
         dto.setPhoneNumber(Util.removeNonNumericCharacters(dto.getPhoneNumber()));
         dto.setEmergencyNumber(Util.removeNonNumericCharacters(dto.getEmergencyNumber()));
+        if (dto.getAddress() != null) {
+            dto.getAddress().setCep(Util.removeNonNumericCharacters(dto.getAddress().getCep()));
+        }
     }
 
     @Override
     protected void prepareToMapUpdate(PatientRequestDTO dto) {
         dto.setPhoneNumber(Util.removeNonNumericCharacters(dto.getPhoneNumber()));
         dto.setEmergencyNumber(Util.removeNonNumericCharacters(dto.getEmergencyNumber()));
+        if (dto.getAddress() != null) {
+            dto.getAddress().setCep(Util.removeNonNumericCharacters(dto.getAddress().getCep()));
+        }
     }
 
     @Override

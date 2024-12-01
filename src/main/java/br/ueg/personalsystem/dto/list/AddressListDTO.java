@@ -9,12 +9,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PatientListDTO {
-    private Long id;
-    private String name;
-    private String cpf;
-    private String email;
-    private String phoneNumber;
-    private Boolean enabled;
-    private AddressListDTO address;
+public class AddressListDTO {
+    private String cep;
+    private String street;
+    private String number;
+    private String complement;
+    private String neighborhood;
+    private String city;
+    private String state;
 }
