@@ -24,5 +24,6 @@ public class PatientResponseDTO {
     private String emergencyNumber;
     private String profession;
     private Double valueForHour;
+    private Boolean enabled;
     private LocalDateTime createdAt;
 }

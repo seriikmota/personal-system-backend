@@ -53,5 +53,8 @@ public class Patient implements GenericModel<Long> {
     private Double valueForHour;
 
     @Column(nullable = false)
+    private Boolean enabled;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 }

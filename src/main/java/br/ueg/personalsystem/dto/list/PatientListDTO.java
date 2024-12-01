@@ -15,4 +15,5 @@ public class PatientListDTO {
     private String cpf;
     private String email;
     private String phoneNumber;
+    private Boolean enabled;
 }
