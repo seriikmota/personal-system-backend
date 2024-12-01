@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class Util {
+    public static String toLowerCase(String str) {
+        if (str != null && !str.isEmpty()) {
+            return str.toLowerCase();
+        }
+        return null;
+    }
+
     public static String removeNonNumericCharacters(String str) {
         if (str != null && !str.isEmpty()) {
             return str.replaceAll("[^0-9]", "");
