@@ -1,10 +1,7 @@
 package br.ueg.personalsystem.reflection;
 
 import br.ueg.genericarchitecture.reflection.ApiReflectionUtils;
-import br.ueg.personalsystem.annotation.CPFValidate;
-import br.ueg.personalsystem.annotation.EmailValidate;
-import br.ueg.personalsystem.annotation.NumberPhoneValidate;
-import br.ueg.personalsystem.annotation.PasswordValidate;
+import br.ueg.personalsystem.annotation.*;
 import br.ueg.personalsystem.enums.ErrorEnum;
 import br.ueg.personalsystem.util.Util;
 
@@ -20,6 +17,13 @@ public class ReflectionUtil extends ApiReflectionUtils {
 
         Map<String, List<ErrorEnum>> mapFieldErrors = new HashMap<>();
         for (Field field : fields) {
+            if (!field.getType().isPrimitive() && !field.getType().getName().startsWith("java.lang") && !field.getType().getName().startsWith("java.time") && !field.getType().isEnum()) {
+                Object objectValue = getFieldValue(object, field);
+                if (objectValue != null) {
+                    mapFieldErrors.putAll(validateAnnotations(getFieldValue(object, field)));
+                }
+            }
+
             if (field.isAnnotationPresent(EmailValidate.class)) {
                 List<ErrorEnum> errors = Util.validateEmail((String) getFieldValue(object, field));
                 if (!errors.isEmpty()) {
@@ -60,6 +64,16 @@ public class ReflectionUtil extends ApiReflectionUtils {
                     }
                 }
             }
+            if (field.isAnnotationPresent(CEPValidate.class)) {
+                List<ErrorEnum> errors = Util.validateCep((String) getFieldValue(object, field));
+                if (!errors.isEmpty()) {
+                    if (mapFieldErrors.containsKey(field.getName())) {
+                        mapFieldErrors.get(getNameCepValidateAnnotation(field)).addAll(errors);
+                    } else {
+                        mapFieldErrors.put(getNameCepValidateAnnotation(field), errors);
+                    }
+                }
+            }
         }
         return mapFieldErrors;
     }
@@ -95,6 +109,15 @@ public class ReflectionUtil extends ApiReflectionUtils {
         String nameOfAnnotation = field.getAnnotation(NumberPhoneValidate.class).name();
         if (nameOfAnnotation != null && !nameOfAnnotation.isBlank()) {
             return field.getAnnotation(NumberPhoneValidate.class).name();
+        } else {
+            return field.getName();
+        }
+    }
+
+    public static String getNameCepValidateAnnotation(Field field) {
+        String nameOfAnnotation = field.getAnnotation(CEPValidate.class).name();
+        if (nameOfAnnotation != null && !nameOfAnnotation.isBlank()) {
+            return field.getAnnotation(CEPValidate.class).name();
         } else {
             return field.getName();
         }
