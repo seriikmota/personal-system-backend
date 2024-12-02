@@ -9,3 +9,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin',
+          java-version: '17'
+      - name: Build project
+        run: mvn clean install -D skipTests
+      - name: Login docker hub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSORD}}
+      - name: Build docker image
+        run: docker build -t piasisaulo/personal-system-backend .
+      - name: docker push piasisaulo/personal-system-backend
+
+
+
