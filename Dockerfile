@@ -11,7 +11,7 @@ RUN git clone https://github.com/seriikmota/generic-architecture.git && \
     git checkout main && \
     mvn dependency:go-offline && \
     mvn clean install -DskipTests && \
-    cp target/*.jar app.jar
+    cp target/*.jar app-architecture.jar
 
 # Exposição da porta da aplicação
 EXPOSE 8080
