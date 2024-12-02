@@ -2,7 +2,7 @@ name: Deploy Application
 
 on:
   push:
-    branches: [main]
+    branches: [teste-git-actions]
 jobs:
   build:
     runs-on: ubuntu-latest
