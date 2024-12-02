@@ -65,6 +65,6 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull piasisaulo/personal-system-backend:latest
       - name: Remove docker container
-        run: docker rm -f deploy_personal
+        run: docker rm -f personal-system-backend
       - name: Run docker container
         run: docker run -d -p 8080:8080 \ -e DATABASE_USERNAME="postgres"\ -e DATABASE_PASSWORD="postgress "\ -e DATABASE_URL="jdbc:postgresql://database-1.cpmywiymsqir.eu-north-1.rds.amazonaws.com:5432/"\ --name deploy_personal piasisaulo/personal-system-backend
