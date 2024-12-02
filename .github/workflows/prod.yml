@@ -57,3 +57,14 @@ jobs:
       # Push da imagem Docker
       - name: Push Docker Image
         run: docker push piasisaulo/personal-system-backend
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull piasisaulo/personal-system-backend:latest
+      - name: Remove docker container
+        run: docker rm -f deploy_ghactions
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 -e DATABASE_USERNAME=${{postgres}} -e DATABASE_PASSWORD='${{postgress}}' -e DATABASE_URL=${{jdbc:postgresql://database-1.cpmywiymsqir.eu-north-1.rds.amazonaws.com:5432/}} --name deploy_personal piasisaulo/personal-system-backend
