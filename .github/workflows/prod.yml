@@ -83,8 +83,8 @@ jobs:
       - name: Run docker container
         run: |
           sudo docker run -d -p 8080:8080 \
-          -e SPRING_DATASOURCE_USERNAME=${{SPRING_DATASOURCE_USERNAME}} \
-          -e SPRING_DATASOURCE_PASSWORD=${{SPRING_DATASOURCE_PASSWORD}} \
-          -e SPRING_DATASOURCE_URL=${{SPRING_DATASOURCE_URL}} \
+          -e SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} \
+          -e SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}} \
+          -e SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}} \
           -e SPRING_PROFILES_ACTIVE="docker" \
           --name deploy_personal piasisaulo/personal-system-backend:latest
