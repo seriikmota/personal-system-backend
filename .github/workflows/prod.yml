@@ -62,12 +62,24 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-      - name: Remove docker container
+      # Cria um container temporário para preservar a imagem
+      - name: Create Temp Container
+        run: |
+          sudo docker run -d --name temp-preserve piasisaulo/personal-system-backend sleep 3600
+
+      # Remove recursos desnecessários
+      - name: Remove Unused Docker Resources
         run: sudo docker system prune -a --volumes -f
 
+      # Remove o container temporário após limpar o ambiente
+      - name: Remove Temp Container
+        run: sudo docker rm -f temp-preserve
+
+      # Pull da imagem do Docker Hub
       - name: Pull image from docker hub
         run: sudo docker pull piasisaulo/personal-system-backend:latest
 
+      # Remove o container existente
       - name: Remove docker container
         run: sudo docker rm -f deploy_personal || true
 
