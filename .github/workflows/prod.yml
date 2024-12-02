@@ -2,7 +2,7 @@ name: Deploy Application
 
 on:
   push:
-    branches: [teste-git-actions]
+    branches: [main]
 
 jobs:
   build:
