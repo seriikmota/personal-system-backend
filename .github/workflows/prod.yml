@@ -7,24 +7,53 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      # Checkout do código do projeto principal
+      - name: Checkout Project Code
         uses: actions/checkout@v4
 
+      # Checkout do código da arquitetura em outra pasta
+      - name: Checkout Architecture Code
+        uses: actions/checkout@v4
+        with:
+          repository: seriikmota/generic-architecture
+          path: generic-architecture
+
+      # Configuração do Java
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build project
+      # Cache Maven
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
+
+      # Build da arquitetura
+      - name: Build Architecture
+        run: |
+          cd generic-architecture
+          mvn clean install -DskipTests
+
+      # Build do projeto principal
+      - name: Build Project
         run: mvn clean install -DskipTests
 
-      - name: Login docker hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      # Login no Docker Hub
+      - name: Login Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build docker image
+      # Build da imagem Docker
+      - name: Build Docker Image
         run: docker build -t piasisaulo/personal-system-backend .
 
-      - name: Push docker image
+      # Push da imagem Docker
+      - name: Push Docker Image
         run: docker push piasisaulo/personal-system-backend
