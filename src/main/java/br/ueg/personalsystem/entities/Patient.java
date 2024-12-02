@@ -28,6 +28,9 @@ public class Patient implements GenericModel<Long> {
     @Column(nullable = false)
     private String cpf;
 
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+    private Address address;
+
     @Column(nullable = false)
     private LocalDate birthDate;
 
@@ -51,6 +54,9 @@ public class Patient implements GenericModel<Long> {
 
     @Column(nullable = false)
     private Double valueForHour;
+
+    @Column(nullable = true)
+    private String healthPlan;
 
     @Column(nullable = false)
     private Boolean enabled;

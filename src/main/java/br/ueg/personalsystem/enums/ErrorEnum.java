@@ -20,8 +20,8 @@ public enum ErrorEnum implements MessageCode {
     BIRTH_DAY_IS_AFTER("M10", MessageType.ERROR),
     CPF_EXIST("M11", MessageType.ERROR),
     CPF_INVALID("M12", MessageType.ERROR),
-    CPF_INVALID_FORMAT("M13", MessageType.ERROR),
-    PATIENT_VALUE_HOUR_INVALID("M14", MessageType.ERROR),;
+    PATIENT_VALUE_HOUR_INVALID("M13", MessageType.ERROR),
+    CEP_INVALID("M14", MessageType.ERROR),;
 
     private final String code;
     private final MessageType type;

@@ -12,7 +12,8 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 @Mapper(
         componentModel = "spring",
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        uses = AddressMapper.class
 )
 public interface PatientMapper extends GenericMapper<PatientRequestDTO, PatientResponseDTO, PatientListDTO, Patient, Long> {
 }

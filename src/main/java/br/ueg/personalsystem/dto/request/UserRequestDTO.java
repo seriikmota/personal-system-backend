@@ -14,8 +14,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class UserRequestDTO {
 
-    private Long id;
-
     @MandatoryField(name = "Nome")
     private String name;
 

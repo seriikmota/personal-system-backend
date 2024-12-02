@@ -12,10 +12,12 @@ import br.ueg.personalsystem.reflection.ReflectionUtil;
 import br.ueg.personalsystem.repository.PatientRepository;
 import br.ueg.personalsystem.service.IPatientService;
 import br.ueg.personalsystem.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +25,17 @@ import java.util.Map;
 public class PatientService extends AbstractService<PatientRequestDTO, PatientResponseDTO, PatientListDTO, Patient, PatientRepository, PatientMapper, Long>
         implements IPatientService {
 
+    @Autowired
+    private PatientRepository repository;
+
+    public Page<Patient> search(String name, String cpf, Pageable pageable) {
+        return repository.searchByNameLikeAndCpfLike(Util.toLowerCase(name), Util.removeNonNumericCharacters(cpf), pageable);
+    }
+
     @Override
     protected void prepareToCreate(Patient data) {
         data.setCreatedAt(LocalDateTime.now());
+        data.getAddress().setPatient(data);
     }
 
     @Override
@@ -42,12 +52,20 @@ public class PatientService extends AbstractService<PatientRequestDTO, PatientRe
     protected void prepareToMapCreate(PatientRequestDTO dto) {
         dto.setPhoneNumber(Util.removeNonNumericCharacters(dto.getPhoneNumber()));
         dto.setEmergencyNumber(Util.removeNonNumericCharacters(dto.getEmergencyNumber()));
+        dto.setCpf(Util.removeNonNumericCharacters(dto.getCpf()));
+        if (dto.getAddress() != null) {
+            dto.getAddress().setCep(Util.removeNonNumericCharacters(dto.getAddress().getCep()));
+        }
     }
 
     @Override
     protected void prepareToMapUpdate(PatientRequestDTO dto) {
         dto.setPhoneNumber(Util.removeNonNumericCharacters(dto.getPhoneNumber()));
         dto.setEmergencyNumber(Util.removeNonNumericCharacters(dto.getEmergencyNumber()));
+        dto.setCpf(Util.removeNonNumericCharacters(dto.getCpf()));
+        if (dto.getAddress() != null) {
+            dto.getAddress().setCep(Util.removeNonNumericCharacters(dto.getAddress().getCep()));
+        }
     }
 
     @Override

@@ -2,7 +2,6 @@ package br.ueg.personalsystem.util;
 
 import br.com.caelum.stella.ValidationMessage;
 import br.com.caelum.stella.validation.CPFValidator;
-import br.com.caelum.stella.validation.error.CPFError;
 import br.ueg.personalsystem.enums.ErrorEnum;
 
 import java.util.ArrayList;
@@ -10,6 +9,13 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class Util {
+    public static String toLowerCase(String str) {
+        if (str != null && !str.isEmpty()) {
+            return str.toLowerCase();
+        }
+        return null;
+    }
+
     public static String removeNonNumericCharacters(String str) {
         if (str != null && !str.isEmpty()) {
             return str.replaceAll("[^0-9]", "");
@@ -66,6 +72,18 @@ public class Util {
             for (ValidationMessage message : cpfValidator.invalidMessagesFor(cpf)) {
                 errors.add(ErrorEnum.CPF_INVALID);
                 break;
+            }
+        }
+
+        return errors;
+    }
+
+    public static List<ErrorEnum> validateCep(String cep) {
+        List<ErrorEnum> errors = new ArrayList<>();
+
+        if (cep != null) {
+            if (cep.length() != 8) {
+                errors.add(ErrorEnum.CEP_INVALID);
             }
         }
 

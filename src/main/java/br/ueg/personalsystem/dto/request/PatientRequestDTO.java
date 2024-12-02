@@ -17,14 +17,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PatientRequestDTO {
 
-    private Long id;
-
     @MandatoryField(name = "Nome")
     private String name;
 
     @MandatoryField(name = "Cpf")
     @CPFValidate(name = "Cpf")
     private String cpf;
+
+    @MandatoryField(name = "Endereço")
+    private AddressRequestDTO address;
 
     @MandatoryField(name = "Data de aniversário")
     private LocalDate birthDate;
@@ -49,6 +50,8 @@ public class PatientRequestDTO {
 
     @MandatoryField(name = "Profissão")
     private String profession;
+
+    private String healthPlan;
 
     @MandatoryField(name = "Valor por hora/aula")
     private Double valueForHour;
