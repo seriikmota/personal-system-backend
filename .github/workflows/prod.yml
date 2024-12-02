@@ -18,7 +18,7 @@ jobs:
       - name: Build project
         run: mvn clean install -DskipTests
       - name: Login docker hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSORD}}
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
         run: docker build -t piasisaulo/personal-system-backend .
       - name: docker push piasisaulo/personal-system-backend
