@@ -1,0 +1,90 @@
+name: Deploy Application
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do código do projeto principal
+      - name: Checkout Project Code
+        uses: actions/checkout@v4
+
+      # Checkout do código da arquitetura em outra pasta
+      - name: Checkout Architecture Code
+        uses: actions/checkout@v4
+        with:
+          repository: seriikmota/generic-architecture
+          path: generic-architecture
+
+      # Configuração do Java
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Cache Maven
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
+      # Build da arquitetura
+      - name: Build Architecture
+        run: |
+          cd generic-architecture
+          mvn clean install -DskipTests
+      # Build do projeto principal
+      - name: Build Project
+        run: mvn clean install -DskipTests
+
+      # Login no Docker Hub
+      - name: Login Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build da imagem Docker
+      - name: Build Docker Image
+        run: docker build -t piasisaulo/personal-system-backend .
+
+      # Push da imagem Docker
+      - name: Push Docker Image
+        run: docker push piasisaulo/personal-system-backend
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      # Cria um container temporário para preservar a imagem
+      - name: Create Temp Container
+        run: |
+          sudo docker run -d --name temp-preserve piasisaulo/personal-system-backend sleep 3600
+      # Remove recursos desnecessários
+      - name: Remove Unused Docker Resources
+        run: sudo docker system prune -a --volumes -f
+
+      # Remove o container temporário após limpar o ambiente
+      - name: Remove Temp Container
+        run: sudo docker rm -f temp-preserve
+
+      # Pull da imagem do Docker Hub
+      - name: Pull image from docker hub
+        run: sudo docker pull piasisaulo/personal-system-backend:latest
+
+      # Remove o container existente
+      - name: Remove docker container
+        run: sudo docker rm -f deploy_personal || true
+
+      - name: Run docker container
+        run: |
+          sudo docker run -d -p 8080:8080 \
+          -e SPRING_DATASOURCE_USERNAME=${{SPRING_DATASOURCE_USERNAME}} \
+          -e SPRING_DATASOURCE_PASSWORD=${{SPRING_DATASOURCE_PASSWORD}} \
+          -e SPRING_DATASOURCE_URL=${{SPRING_DATASOURCE_URL}} \
+          -e SPRING_PROFILES_ACTIVE="docker" \
+          --name deploy_personal piasisaulo/personal-system-backend:latest
