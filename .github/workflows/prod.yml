@@ -89,5 +89,5 @@ jobs:
           -e SPRING_DATABASE_USERNAME="postgres" \
           -e SPRING_DATABASE_PASSWORD="postgress" \
           -e SPRING_DATABASE_URL="jdbc:postgresql://database-1.cpmywiymsqir.eu-north-1.rds.amazonaws.com:5432/" \
-          -e SPRING_PROFILES_ACTIVE="docker"
-          --name deploy_personal piasisaulo/personal-system-backend
+          -e SPRING_PROFILES_ACTIVE="docker" \
+          --name deploy_personal piasisaulo/personal-system-backend:latest
