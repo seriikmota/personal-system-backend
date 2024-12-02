@@ -66,7 +66,7 @@ jobs:
         run: sudo docker pull piasisaulo/personal-system-backend:latest
 
       - name: Remove docker container
-        run: sudo docker rm -f personal-system-backend || true
+        run: sudo docker rm -f deploy_personal || true
 
       - name: Run docker container
         run: |
