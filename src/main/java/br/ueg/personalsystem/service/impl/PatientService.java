@@ -40,7 +40,7 @@ public class PatientService extends AbstractService<PatientRequestDTO, PatientRe
 
     @Override
     protected void prepareToUpdate(Patient dataDB) {
-        dataDB.getAddress().setPatient(dataDB);
+
     }
 
     @Override
