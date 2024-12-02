@@ -62,6 +62,9 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Remove docker container
+        run: sudo docker system prune -a --volumes -f
+
       - name: Pull image from docker hub
         run: sudo docker pull piasisaulo/personal-system-backend:latest
 
