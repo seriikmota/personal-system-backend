@@ -2,15 +2,15 @@ name: Deploy Application
 
 on:
   push:
-    branches: [main]
+    branches: [teste-aws-frontEnd]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código do projeto principal
-      - name: Checkout Project Code
+      # Checkout do código do backend
+      - name: Checkout Backend Code
         uses: actions/checkout@v4
 
       # Checkout do código da arquitetura em outra pasta
@@ -20,12 +20,25 @@ jobs:
           repository: seriikmota/generic-architecture
           path: generic-architecture
 
+      # Checkout do código do frontend
+      - name: Checkout Frontend Code
+        uses: actions/checkout@v4
+        with:
+          repository: Lipolys/personal-system-frontend
+          path: personal-system-frontend
+
       # Configuração do Java
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      # Configuração do Node.js para o frontend
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
       # Cache Maven
       - name: Cache Maven Dependencies
@@ -35,14 +48,23 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven
+
       # Build da arquitetura
       - name: Build Architecture
         run: |
           cd generic-architecture
           mvn clean install -DskipTests
-      # Build do projeto principal
-      - name: Build Project
+
+      # Build do backend
+      - name: Build Backend
         run: mvn clean install -DskipTests
+
+      # Instalação e build do frontend
+      - name: Build Frontend
+        run: |
+          cd personal-system-frontend
+          npm install
+          npm run build -- --output-path=dist
 
       # Login no Docker Hub
       - name: Login Docker Hub
@@ -50,7 +72,10 @@ jobs:
 
       # Build da imagem Docker
       - name: Build Docker Image
-        run: docker build -t piasisaulo/personal-system-backend .
+        run: |
+          docker build \
+          --build-arg FRONTEND_BUILD_DIR=personal-system-frontend/dist \
+          -t piasisaulo/personal-system-backend .
 
       # Push da imagem Docker
       - name: Push Docker Image
@@ -59,28 +84,18 @@ jobs:
   deploy:
     needs: build
     runs-on: self-hosted
+
     steps:
-      # Cria um container temporário para preservar a imagem
-      - name: Create Temp Container
-        run: |
-          sudo docker run -d --name temp-preserve piasisaulo/personal-system-backend sleep 3600
-      # Remove recursos desnecessários
-      - name: Remove Unused Docker Resources
-        run: sudo docker system prune -a --volumes -f
-
-      # Remove o container temporário após limpar o ambiente
-      - name: Remove Temp Container
-        run: sudo docker rm -f temp-preserve
-
       # Pull da imagem do Docker Hub
-      - name: Pull image from docker hub
+      - name: Pull image from Docker Hub
         run: sudo docker pull piasisaulo/personal-system-backend:latest
 
       # Remove o container existente
-      - name: Remove docker container
+      - name: Remove Existing Container
         run: sudo docker rm -f deploy_personal || true
 
-      - name: Run docker container
+      # Executar o novo container
+      - name: Run Docker Container
         run: |
           sudo docker run -d -p 8080:8080 \
           -e SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} \
