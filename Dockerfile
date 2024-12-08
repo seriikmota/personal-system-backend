@@ -1,10 +1,9 @@
 # Etapa 1: Base para o backend
-FROM eclipse-temurin:17-jdk-alpine AS backend
-
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 COPY target/*.jar app.jar
 
-
+# Instalação do git e Maven
 RUN apk add --no-cache git maven
 
 # Clonagem do repositório e build
