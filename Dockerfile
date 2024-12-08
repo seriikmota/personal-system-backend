@@ -6,24 +6,25 @@ WORKDIR /app
 # Instalar dependências: Git e Maven
 RUN apk add --no-cache git maven
 
-# Clonagem do repositório e build do projeto
+# Clonagem do repositório do backend e build do projeto
 RUN git clone https://github.com/seriikmota/generic-architecture.git && \
     cd generic-architecture && \
     git checkout main && \
     mvn dependency:go-offline && \
     mvn clean install -DskipTests
 
-# Copiar o JAR gerado para a imagem
-# Ajuste o nome do JAR conforme o nome gerado no seu projeto
-RUN cp generic-architecture/target/*.jar /app/app.jar
+# Copiar o JAR gerado para a pasta de destino da imagem
+RUN cp generic-architecture/target/*.jar /app/backend.jar
 
 # Etapa 2: Base para o frontend
 FROM node:18-alpine AS frontend
 
 WORKDIR /frontend
 
+# Instalar dependências: Git
 RUN apk add --no-cache git
 
+# Clonagem do repositório do frontend e build da aplicação
 RUN git clone https://github.com/Lipolys/personal-system-frontend.git && \
     cd personal-system-frontend && \
     git checkout master && \
@@ -35,14 +36,14 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-# Copiar o build do frontend
+# Copiar o build do frontend (aplicação estática) para dentro da pasta /frontend
 COPY --from=frontend /frontend/personal-system-frontend/dist /app/frontend
 
-# Copiar o arquivo JAR do backend
-COPY --from=backend /app/app.jar /app/app.jar
+# Copiar o JAR gerado do backend para a pasta /app
+COPY --from=backend /app/backend.jar /app/backend.jar
 
-# Exposição das portas
+# Exposição das portas da aplicação (backend 8080, frontend 3000)
 EXPOSE 8080 3000
 
-# Executar o backend com o JAR correto
-CMD ["java", "-jar", "/app/app.jar"]
+# Comando de inicialização: Inicializar o backend e servir o frontend
+CMD ["sh", "-c", "java -jar /app/app.jar & http-server /app/frontend"]
