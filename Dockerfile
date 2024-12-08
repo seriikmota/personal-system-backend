@@ -25,7 +25,7 @@ RUN apk add --no-cache git
 # Clonagem e build do frontend
 RUN git clone https://github.com/seu-usuario/seu-repositorio-frontend.git && \
     cd seu-repositorio-frontend && \
-    git checkout main && \
+    git checkout master && \
     npm install && \
     npm run build
 
