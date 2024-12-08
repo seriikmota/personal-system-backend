@@ -7,12 +7,13 @@ COPY target/*.jar app.jar
 
 RUN apk add --no-cache git maven
 
+# Clonagem do repositório e build
 RUN git clone https://github.com/seriikmota/generic-architecture.git && \
     cd generic-architecture && \
     git checkout main && \
     mvn dependency:go-offline && \
     mvn clean install -DskipTests && \
-    cp target/*.jar /app/backend.jar
+    cp target/*.jar app-architecture.jar
 
 # Etapa 2: Base para o frontend
 FROM node:18-alpine AS frontend
@@ -29,10 +30,6 @@ RUN git clone https://github.com/Lipolys/personal-system-frontend.git && \
 
 # Etapa 3: Combinação dos projetos em uma única imagem
 FROM eclipse-temurin:17-jdk-alpine
-
-# Copiar o backend
-WORKDIR /app
-COPY --from=backend /app/backend.jar /app/backend.jar
 
 # Copiar o build do frontend
 COPY --from=frontend /frontend/personal-system-frontend/dist /app/frontend
