@@ -38,4 +38,4 @@ COPY --from=frontend /frontend/personal-system-frontend/dist /app/frontend
 # Exposição das portas
 EXPOSE 8080 3000
 
-CMD ["java", "-jar", "/app/backend.jar"]
+CMD ["java", "-jar", "/app/app.jar"]
