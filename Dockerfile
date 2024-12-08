@@ -3,10 +3,8 @@ FROM eclipse-temurin:17-jdk-alpine AS backend
 
 WORKDIR /app
 
-# Instalação do Git e Maven
 RUN apk add --no-cache git maven
 
-# Clonagem e build do backend
 RUN git clone https://github.com/seriikmota/generic-architecture.git && \
     cd generic-architecture && \
     git checkout main && \
@@ -19,10 +17,8 @@ FROM node:18-alpine AS frontend
 
 WORKDIR /frontend
 
-# Instalação do Git
 RUN apk add --no-cache git
 
-# Clonagem e build do frontend
 RUN git clone https://github.com/Lipolys/personal-system-frontend.git && \
     cd personal-system-frontend && \
     git checkout master && \
@@ -37,11 +33,9 @@ WORKDIR /app
 COPY --from=backend /app/backend.jar /app/backend.jar
 
 # Copiar o build do frontend
-WORKDIR /app/frontend
-COPY --from=frontend /frontend/personal-system-frontend/build /app/frontend
+COPY --from=frontend /frontend/personal-system-frontend/dist /app/frontend
 
-# Exposição das portas do backend e do frontend (caso necessário)
+# Exposição das portas
 EXPOSE 8080 3000
 
-# Comando para iniciar o backend
 CMD ["java", "-jar", "/app/backend.jar"]

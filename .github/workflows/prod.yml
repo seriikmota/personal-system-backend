@@ -64,11 +64,16 @@ jobs:
         run: |
           cd personal-system-frontend
           npm install
-          npm run build -- --output-path=dist
+          npm run build
+
+      # Verificar saída do build do frontend
+      - name: Check Frontend Build Output
+        run: ls -l personal-system-frontend/dist
 
       # Login no Docker Hub
       - name: Login Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       # Build da imagem Docker
       - name: Build Docker Image
@@ -90,7 +95,7 @@ jobs:
       - name: Pull image from Docker Hub
         run: sudo docker pull piasisaulo/personal-system-backend:latest
 
-      # Remove o container existente
+      # Remover o container existente
       - name: Remove Existing Container
         run: sudo docker rm -f deploy_personal || true
 
@@ -98,8 +103,8 @@ jobs:
       - name: Run Docker Container
         run: |
           sudo docker run -d -p 8080:8080 \
-          -e SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} \
-          -e SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}} \
-          -e SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}} \
+          -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+          -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+          -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
           -e SPRING_PROFILES_ACTIVE="docker" \
           --name deploy_personal piasisaulo/personal-system-backend:latest
