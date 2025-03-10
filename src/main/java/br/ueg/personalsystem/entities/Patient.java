@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -30,6 +31,9 @@ public class Patient implements GenericModel<Long> {
 
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private Address address;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Anamnese> anamneses;
 
     @Column(nullable = false)
     private LocalDate birthDate;

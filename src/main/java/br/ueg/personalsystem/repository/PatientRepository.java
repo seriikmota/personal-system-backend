@@ -11,4 +11,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     Boolean existsPatientByCpf(String cpf);
     @Query("SELECT p FROM Patient p WHERE (:name IS NULL OR LOWER(p.name) LIKE %:name%) AND (:cpf IS NULL OR p.cpf LIKE %:cpf%)")
     Page<Patient> searchByNameLikeAndCpfLike(@Param("name") String name, @Param("cpf") String cpf, Pageable pageable);
+
 }
