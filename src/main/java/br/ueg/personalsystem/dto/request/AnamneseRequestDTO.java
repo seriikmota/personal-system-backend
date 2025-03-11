@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnamneseRequestDTO {
-    private PatientRequestAnamneseDTO patient;
+    private PatientRequestDTO patient;
     private  LocalDate birthDate;
     private LocalDate anamnesisDate;
     private String mainComplaints;

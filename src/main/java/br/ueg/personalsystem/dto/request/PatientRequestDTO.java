@@ -17,6 +17,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PatientRequestDTO {
 
+    private Long id;
+
     @MandatoryField(name = "Nome")
     private String name;
 
