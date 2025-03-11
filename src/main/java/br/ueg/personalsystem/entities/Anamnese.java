@@ -28,9 +28,6 @@ public class Anamnese implements GenericModel<Long> {
     private Patient patient;
 
     @Column(nullable = false)
-    private LocalDate birthDate;
-
-    @Column(nullable = false)
     private LocalDate anamnesisDate;
 
     @Column(nullable = false)
@@ -41,5 +38,29 @@ public class Anamnese implements GenericModel<Long> {
 
     @Column
     private String observations;
+
+    @Column(nullable = false)
+    private Double weight; // Peso em kg
+
+    @Column(nullable = false)
+    private Double height; // Altura em metros
+
+    @Column(nullable = false)
+    private Double waistCircumference; // Circunferência da cintura em cm
+
+    @Column(nullable = false)
+    private Double hipCircumference; // Circunferência do quadril em cm
+
+    @Column(nullable = false)
+    private Double bodyFatPercentage; // Percentual de gordura corporal
+
+    @Column(nullable = false)
+    private Double muscleMass;
+
+    @Column(nullable = false)
+    private Double bodyMassIndex; // IMC (calculado ou persistido)
+
+    @Column(nullable = false)
+    private Double waistHipRatio; // Relação cintura/quadril (calculado ou persistido)
 }
 

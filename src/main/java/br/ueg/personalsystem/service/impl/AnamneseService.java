@@ -23,6 +23,18 @@ public class AnamneseService extends AbstractService<AnamneseRequestDTO, Anamnes
 
 
     @Override
+    protected void prepareToMapCreate(AnamneseRequestDTO dto) {
+       dto.setBodyMassIndex(dto.getWeight() / (dto.getHeight() * dto.getHeight()));
+       dto.setWaistHipRatio(dto.getWaistCircumference()/ dto.getWaistCircumference());
+    }
+
+    @Override
+    protected void prepareToMapUpdate(AnamneseRequestDTO dto) {
+        dto.setBodyMassIndex(dto.getWeight() / (dto.getHeight() * dto.getHeight()));
+        dto.setWaistHipRatio(dto.getWaistCircumference()/ dto.getWaistCircumference());
+    }
+
+    @Override
     protected void prepareToCreate(Anamnese data) {
 
     }

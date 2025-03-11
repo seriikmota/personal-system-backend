@@ -13,10 +13,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnamneseRequestDTO {
-    private PatientRequestDTO patient;
-    private  LocalDate birthDate;
+    private PatientRequestDTO patient; // ID do paciente (em vez de um DTO completo)
     private LocalDate anamnesisDate;
     private String mainComplaints;
     private String medicalHistory;
     private String observations;
+
+    // Campos de avaliação antropométrica
+    private Double weight; // Peso em kg
+    private Double height; // Altura em metros
+    private Double waistCircumference; // Circunferência da cintura em cm
+    private Double hipCircumference; // Circunferência do quadril em cm
+    private Double bodyFatPercentage; // Percentual de gordura corporal
+    private Double muscleMass; // Massa muscular em kg
+
+    // Campos calculados
+    private Double bodyMassIndex; // IMC (calculado ou persistido)
+    private Double waistHipRatio; // Relação cintura/quadril (calculado ou persistido)
 }
