@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AnamneseResponseDTO {
    private Long id;
-   private Long patientId; // ID do paciente
+   private PatientResponseDTO patientId; // ID do paciente
    private LocalDate anamnesisDate;
    private String mainComplaints;
    private String medicalHistory;
