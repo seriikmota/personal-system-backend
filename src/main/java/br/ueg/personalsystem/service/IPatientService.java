@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.service;
 
-import br.ueg.genericarchitecture.service.IAbstractService;
+import br.ueg.personalsystem.base.service.IAbstractService;
 import br.ueg.personalsystem.dto.request.PatientRequestDTO;
 import br.ueg.personalsystem.entities.Patient;
 import org.springframework.data.domain.Page;

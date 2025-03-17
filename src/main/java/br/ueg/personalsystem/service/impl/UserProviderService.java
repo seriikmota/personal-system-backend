@@ -1,9 +1,9 @@
 package br.ueg.personalsystem.service.impl;
 
-import br.ueg.genericarchitecture.dto.CredentialDTO;
-import br.ueg.genericarchitecture.enums.ApiErrorEnum;
-import br.ueg.genericarchitecture.exception.BusinessException;
-import br.ueg.genericarchitecture.service.IUserProviderService;
+import br.ueg.personalsystem.base.dto.CredentialDTO;
+import br.ueg.personalsystem.base.enums.ApiErrorEnum;
+import br.ueg.personalsystem.base.exception.BusinessException;
+import br.ueg.personalsystem.base.service.IUserProviderService;
 import br.ueg.personalsystem.entities.Role;
 import br.ueg.personalsystem.entities.User;
 import br.ueg.personalsystem.entities.UserGroup;

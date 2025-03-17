@@ -1,8 +1,8 @@
 package br.ueg.personalsystem.service.validations.user;
 
-import br.ueg.genericarchitecture.enums.ValidationActionsEnum;
-import br.ueg.genericarchitecture.exception.Message;
-import br.ueg.genericarchitecture.validation.IValidations;
+import br.ueg.personalsystem.base.enums.ValidationActionsEnum;
+import br.ueg.personalsystem.base.exception.Message;
+import br.ueg.personalsystem.base.validation.IValidations;
 import br.ueg.personalsystem.entities.User;
 import br.ueg.personalsystem.enums.ErrorEnum;
 import br.ueg.personalsystem.repository.UserRepository;

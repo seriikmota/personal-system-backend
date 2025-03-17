@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.entities;
 
-import br.ueg.genericarchitecture.domain.GenericModel;
+import br.ueg.personalsystem.base.domain.GenericModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

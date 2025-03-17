@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.config;
 
-import br.ueg.genericarchitecture.config.ApiSwaggerConfig;
+import br.ueg.personalsystem.base.config.ApiSwaggerConfig;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
