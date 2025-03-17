@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.mapper;
 
-import br.ueg.genericarchitecture.mapper.GenericMapper;
+import br.ueg.personalsystem.base.mapper.GenericMapper;
 import br.ueg.personalsystem.dto.list.UserListDTO;
 import br.ueg.personalsystem.dto.request.UserRequestDTO;
 import br.ueg.personalsystem.dto.response.UserResponseDTO;

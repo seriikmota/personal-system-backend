@@ -28,13 +28,13 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<br.ueg.genericarchitecture.version>0.0.3-SNAPSHOT</br.ueg.genericarchitecture.version>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<org.springdoc.version>2.6.0</org.springdoc.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 		<org.projectlombok.version>1.18.32</org.projectlombok.version>
 		<org.springframework.security.version>6.3.3</org.springframework.security.version>
 		<br.com.caelum.stella.version>2.1.2</br.com.caelum.stella.version>
+		<com.auth0>4.4.0</com.auth0>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -76,6 +76,15 @@
 			<version>${org.springframework.security.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>br.com.caelum.stella</groupId>
 			<artifactId>caelum-stella-core</artifactId>
 			<version>${br.com.caelum.stella.version}</version>
@@ -86,10 +95,14 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>br.ueg</groupId>
-			<artifactId>genericarchitecture</artifactId>
-			<version>${br.ueg.genericarchitecture.version}</version>
-			<scope>compile</scope>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${org.springdoc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${com.auth0}</version>
 		</dependency>
 	</dependencies>
 

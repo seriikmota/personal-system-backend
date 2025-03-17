@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.dto.request;
 
-import br.ueg.genericarchitecture.annotation.MandatoryField;
+import br.ueg.personalsystem.base.annotation.MandatoryField;
 import br.ueg.personalsystem.annotation.CPFValidate;
 import br.ueg.personalsystem.annotation.EmailValidate;
 import br.ueg.personalsystem.annotation.NumberPhoneValidate;

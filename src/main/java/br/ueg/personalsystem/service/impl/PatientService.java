@@ -1,7 +1,7 @@
 package br.ueg.personalsystem.service.impl;
 
-import br.ueg.genericarchitecture.exception.Message;
-import br.ueg.genericarchitecture.service.impl.AbstractService;
+import br.ueg.personalsystem.base.exception.Message;
+import br.ueg.personalsystem.base.service.impl.AbstractService;
 import br.ueg.personalsystem.dto.list.PatientListDTO;
 import br.ueg.personalsystem.dto.request.PatientRequestDTO;
 import br.ueg.personalsystem.dto.response.PatientResponseDTO;
