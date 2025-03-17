@@ -1,7 +1,7 @@
 package br.ueg.personalsystem.enums;
 
-import br.ueg.genericarchitecture.enums.MessageCode;
-import br.ueg.genericarchitecture.enums.MessageType;
+import br.ueg.personalsystem.base.enums.MessageCode;
+import br.ueg.personalsystem.base.enums.MessageType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

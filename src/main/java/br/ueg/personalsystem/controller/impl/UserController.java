@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.controller.impl;
 
-import br.ueg.genericarchitecture.controller.impl.AbstractCrudController;
+import br.ueg.personalsystem.base.controller.impl.AbstractCrudController;
 import br.ueg.personalsystem.controller.IUserController;
 import br.ueg.personalsystem.dto.list.UserListDTO;
 import br.ueg.personalsystem.dto.request.UserRequestDTO;

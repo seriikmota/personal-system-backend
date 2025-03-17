@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.dto.request;
 
-import br.ueg.genericarchitecture.annotation.MandatoryField;
+import br.ueg.personalsystem.base.annotation.MandatoryField;
 import br.ueg.personalsystem.annotation.CEPValidate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
