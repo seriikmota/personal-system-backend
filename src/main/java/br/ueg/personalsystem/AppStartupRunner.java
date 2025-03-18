@@ -62,6 +62,8 @@ public class AppStartupRunner implements ApplicationRunner {
                     .email("teste@gmail.com")
                     .enabled(Boolean.TRUE)
                     .userGroup(userGroup)
+                    .apiKeyEvolution("3DBFB2F3-AD91-4ABC-9ED3-4072027EC101")
+                    .instanceNameEvolution("Instancia Erik")
                     .build();
 
             roleRepository.saveAll(roleList);
