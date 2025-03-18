@@ -15,14 +15,17 @@ public class AnamneseMeasurementsValidation implements IValidations<Anamnese> {
 
     @Override
     public void validate(Anamnese data, ValidationActionsEnum action, List<Message> messagesToThrow) {
-        validateWeight(data.getWeight(), messagesToThrow);
-        validateHeight(data.getHeight(), messagesToThrow);
-        validateWaistCircumference(data.getWaistCircumference(), messagesToThrow);
-        validateHipCircumference(data.getHipCircumference(), messagesToThrow);
-        validateBodyFatPercentage(data.getBodyFatPercentage(), messagesToThrow);
-        validateMuscleMass(data.getMuscleMass(), messagesToThrow);
-        validateBodyMassIndex(data.getBodyMassIndex(), messagesToThrow);
-        validateWaistHipRatio(data.getWaistHipRatio(), messagesToThrow);
+        if (action.equals(ValidationActionsEnum.CREATE) || action.equals(ValidationActionsEnum.UPDATE)){
+
+            validateWeight(data.getWeight(), messagesToThrow);
+            validateHeight(data.getHeight(), messagesToThrow);
+            validateWaistCircumference(data.getWaistCircumference(), messagesToThrow);
+            validateHipCircumference(data.getHipCircumference(), messagesToThrow);
+            validateBodyFatPercentage(data.getBodyFatPercentage(), messagesToThrow);
+            validateMuscleMass(data.getMuscleMass(), messagesToThrow);
+            validateBodyMassIndex(data.getBodyMassIndex(), messagesToThrow);
+            validateWaistHipRatio(data.getWaistHipRatio(), messagesToThrow);
+        }
     }
 
     private void validateWeight(Double weight, List<Message> messagesToThrow) {
