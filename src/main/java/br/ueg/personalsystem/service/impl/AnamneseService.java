@@ -1,7 +1,7 @@
 package br.ueg.personalsystem.service.impl;
 
-import br.ueg.genericarchitecture.exception.Message;
-import br.ueg.genericarchitecture.service.impl.AbstractService;
+import br.ueg.personalsystem.base.exception.Message;
+import br.ueg.personalsystem.base.service.impl.AbstractService;
 import br.ueg.personalsystem.dto.list.AnamneseListDTO;
 import br.ueg.personalsystem.dto.request.AnamneseRequestDTO;
 import br.ueg.personalsystem.dto.response.AnamneseResponseDTO;
@@ -58,24 +58,5 @@ public class AnamneseService extends AbstractService<AnamneseRequestDTO, Anamnes
 
     }
 
-    @Override
-    protected void validateToMapCreate(AnamneseRequestDTO dto, List<Message> messagesToThrow) {
-        this.validateAnnotations(dto, messagesToThrow);
-    }
 
-    @Override
-    protected void validateToMapUpdate(AnamneseRequestDTO dto, List<Message> messagesToThrow) {
-        this.validateAnnotations(dto, messagesToThrow);
-    }
-
-    private void validateAnnotations(Object object, List<Message> messagesToThrow) {
-        Map<String, List<ErrorEnum>> mapErrors = ReflectionUtil.validateAnnotations(object);
-        if (!mapErrors.isEmpty()) {
-            for (String fieldKey : mapErrors.keySet()) {
-                for (ErrorEnum errorEnum : mapErrors.get(fieldKey)) {
-                    messagesToThrow.add(new Message(errorEnum, fieldKey));
-                }
-            }
-        }
-    }
 }

@@ -1,9 +1,9 @@
 package br.ueg.personalsystem.service.validations.anamnese;
 
 
-import br.ueg.genericarchitecture.enums.ValidationActionsEnum;
-import br.ueg.genericarchitecture.exception.Message;
-import br.ueg.genericarchitecture.validation.IValidations;
+import br.ueg.personalsystem.base.enums.ValidationActionsEnum;
+import br.ueg.personalsystem.base.exception.Message;
+import br.ueg.personalsystem.base.validation.IValidations;
 import br.ueg.personalsystem.entities.Anamnese;
 import br.ueg.personalsystem.enums.ErrorEnum;
 import org.springframework.stereotype.Component;

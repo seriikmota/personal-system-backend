@@ -14,9 +14,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AnamneseListDTO {
    private Long id;
-   private PatientListDTO patient; // Usar DTO do paciente para evitar expor dados desnecessários
+   private PatientListDTO patient;
    private LocalDate anamnesisDate;
-   private Double weight; // Peso
-   private Double height; // Altura
-   private Double bodyMassIndex; // IMC (pode ser calculado ou persistido)
+   private Double weight;
+   private Double height;
+   private Double bodyMassIndex;
 }

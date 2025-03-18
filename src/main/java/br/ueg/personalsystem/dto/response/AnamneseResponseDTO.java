@@ -20,15 +20,13 @@ public class AnamneseResponseDTO {
    private String medicalHistory;
    private String observations;
 
-   // Campos de avaliação antropométrica
-   private Double weight; // Peso em kg
-   private Double height; // Altura em metros
-   private Double waistCircumference; // Circunferência da cintura em cm
-   private Double hipCircumference; // Circunferência do quadril em cm
-   private Double bodyFatPercentage; // Percentual de gordura corporal
-   private Double muscleMass; // Massa muscular em kg
+   private Double weight;
+   private Double height;
+   private Double waistCircumference;
+   private Double hipCircumference;
+   private Double bodyFatPercentage;
+   private Double muscleMass;
 
-   // Campos calculados
-   private Double bodyMassIndex; // IMC (calculado ou persistido)
-   private Double waistHipRatio; // Relação cintura/quadril (calculado ou persistido)
+   private Double bodyMassIndex;
+   private Double waistHipRatio;
 }

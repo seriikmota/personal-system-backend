@@ -1,7 +1,7 @@
 package br.ueg.personalsystem.dto.request;
 
 
-import br.ueg.genericarchitecture.annotation.MandatoryField;
+import br.ueg.personalsystem.base.annotation.MandatoryField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,31 +27,29 @@ public class AnamneseRequestDTO {
     @MandatoryField(name = "Histórico Médico")
     private String medicalHistory;
 
-    private String observations; // Observações não são obrigatórias
+    private String observations;
 
-    // Campos de avaliação antropométrica
     @MandatoryField(name = "Peso")
-    private Double weight; // Peso em kg
+    private Double weight;
 
     @MandatoryField(name = "Altura")
-    private Double height; // Altura em metros
+    private Double height;
 
     @MandatoryField(name = "Circunferência da Cintura")
-    private Double waistCircumference; // Circunferência da cintura em cm
+    private Double waistCircumference;
 
     @MandatoryField(name = "Circunferência do Quadril")
-    private Double hipCircumference; // Circunferência do quadril em cm
+    private Double hipCircumference;
 
     @MandatoryField(name = "Percentual de Gordura Corporal")
-    private Double bodyFatPercentage; // Percentual de gordura corporal
+    private Double bodyFatPercentage;
 
     @MandatoryField(name = "Massa Muscular")
-    private Double muscleMass; // Massa muscular em kg
+    private Double muscleMass;
 
-    // Campos calculados
     @MandatoryField(name = "Índice de Massa Corporal (IMC)")
-    private Double bodyMassIndex; // IMC (calculado ou persistido)
+    private Double bodyMassIndex;
 
     @MandatoryField(name = "Relação Cintura/Quadril")
-    private Double waistHipRatio; // Relação cintura/quadril (calculado ou persistido)
+    private Double waistHipRatio;
 }
