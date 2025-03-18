@@ -21,7 +21,16 @@ public enum ErrorEnum implements MessageCode {
     CPF_EXIST("M11", MessageType.ERROR),
     CPF_INVALID("M12", MessageType.ERROR),
     PATIENT_VALUE_HOUR_INVALID("M13", MessageType.ERROR),
-    CEP_INVALID("M14", MessageType.ERROR),;
+    CEP_INVALID("M14", MessageType.ERROR),
+    // Novos códigos de erro para Anamnese
+    INVALID_WEIGHT("M15", MessageType.ERROR),
+    INVALID_HEIGHT("M16", MessageType.ERROR),
+    INVALID_WAIST_CIRCUMFERENCE("M17", MessageType.ERROR),
+    INVALID_HIP_CIRCUMFERENCE("M18", MessageType.ERROR),
+    INVALID_BODY_FAT_PERCENTAGE("M19", MessageType.ERROR),
+    INVALID_MUSCLE_MASS("M20", MessageType.ERROR),
+    INVALID_BODY_MASS_INDEX("M21", MessageType.ERROR),
+    INVALID_WAIST_HIP_RATIO("M22", MessageType.ERROR);
 
     private final String code;
     private final MessageType type;
