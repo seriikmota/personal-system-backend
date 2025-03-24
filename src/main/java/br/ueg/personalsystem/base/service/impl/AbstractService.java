@@ -29,17 +29,17 @@ public abstract class AbstractService<DTORequest, DTOResponse, DTOList, MODEL ex
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    private REPOSITORY repository;
+    protected REPOSITORY repository;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    private MAPPER mapper;
+    protected MAPPER mapper;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired(required = false)
-    private List<IValidations<MODEL>> validations = new ArrayList<>();
+    protected List<IValidations<MODEL>> validations = new ArrayList<>();
 
-    private Class<TYPE_PK> entityClass;
+    protected Class<TYPE_PK> entityClass;
 
     public List<MODEL> listAll() {
         return repository.findAll();

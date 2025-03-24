@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorEnum implements MessageCode {
+    GENERAL_ERROR("M0", MessageType.ERROR),
     MANDATORY_FIELD("M1", MessageType.ERROR),
     PASSWORDS_DIFFERENT("M2", MessageType.ERROR),
     PASSWORD_INVALID("M3", MessageType.ERROR),
@@ -21,7 +22,10 @@ public enum ErrorEnum implements MessageCode {
     CPF_EXIST("M11", MessageType.ERROR),
     CPF_INVALID("M12", MessageType.ERROR),
     PATIENT_VALUE_HOUR_INVALID("M13", MessageType.ERROR),
-    CEP_INVALID("M14", MessageType.ERROR),;
+    CEP_INVALID("M14", MessageType.ERROR),
+    USER_HASH_INSTANCE("M15", MessageType.ERROR),
+    USER_NOT_HAVE_INSTANCE("M16", MessageType.ERROR),
+    YOU_NOT_HAVE_INSTANCE("M17", MessageType.ERROR),;
 
     private final String code;
     private final MessageType type;

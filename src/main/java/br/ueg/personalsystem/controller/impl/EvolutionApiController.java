@@ -1,6 +1,8 @@
 package br.ueg.personalsystem.controller.impl;
 
 import br.ueg.personalsystem.controller.IEvolutionApiController;
+import br.ueg.personalsystem.dto.evolution.ConnectInstanceResponseDTO;
+import br.ueg.personalsystem.dto.evolution.ConnectionStatusDTO;
 import br.ueg.personalsystem.service.IEvolutionApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,21 +19,45 @@ public class EvolutionApiController implements IEvolutionApiController {
     protected IEvolutionApiService service;
 
     @GetMapping
+    @PreAuthorize(value = "hasRole('ROLE_USER_CREATE')")
     public ResponseEntity<Object> apiInformation(){
         return ResponseEntity.status(HttpStatus.OK).body(service.apiInformation());
     }
 
-    @PostMapping(path = "/instance/connect")
+    @PostMapping(path = "/instance/create")
     @Transactional
     @PreAuthorize(value = "hasRole('ROLE_USER_CREATE')")
-    public ResponseEntity<Object> connectInstance(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.connectInstance());
+    public ResponseEntity<String> createInstance(@RequestParam(value = "userId") Long userId, @RequestParam(value = "instanceName") String instanceName){
+        service.createInstance(userId, instanceName);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping(path = "/instance/delete")
+    @Transactional
+    @PreAuthorize(value = "hasRole('ROLE_USER_CREATE')")
+    public ResponseEntity<String> deleteInstance(@RequestParam(value = "userId") Long userId) {
+        service.deleteInstance(userId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping(path = "/instance/connect")
+    @PreAuthorize(value = "hasRole('ROLE_USER_CREATE')")
+    public ResponseEntity<ConnectInstanceResponseDTO> connectInstance() {
+        ConnectInstanceResponseDTO responseDTO = service.connectInstance();
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
     @DeleteMapping(path = "/instance/logout")
-    @Transactional
     @PreAuthorize(value = "hasRole('ROLE_USER_CREATE')")
-    public ResponseEntity<Object> logoutInstance(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.logoutInstance());
+    public ResponseEntity<String> logoutInstance() {
+        service.logoutInstance();
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping(path = "/instance/status")
+    @PreAuthorize(value = "hasRole('ROLE_USER_CREATE')")
+    public ResponseEntity<ConnectionStatusDTO> statusInstance() {
+        ConnectionStatusDTO responseDTO = service.connectionStatus();
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 }

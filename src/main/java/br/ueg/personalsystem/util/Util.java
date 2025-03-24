@@ -95,4 +95,8 @@ public class Util {
     public static Long getIdUserLogged() {
         return ((CredentialDTO) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getId();
     }
+
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
+    }
 }
