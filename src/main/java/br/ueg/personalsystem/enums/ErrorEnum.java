@@ -31,9 +31,9 @@ public enum ErrorEnum implements MessageCode {
     INVALID_MUSCLE_MASS("M20", MessageType.ERROR),
     INVALID_BODY_MASS_INDEX("M21", MessageType.ERROR),
     INVALID_WAIST_HIP_RATIO("M22", MessageType.ERROR),
-    USER_HASH_INSTANCE("M15", MessageType.ERROR),
-    USER_NOT_HAVE_INSTANCE("M16", MessageType.ERROR),
-    YOU_NOT_HAVE_INSTANCE("M17", MessageType.ERROR),;
+    USER_HASH_INSTANCE("M23", MessageType.ERROR),
+    USER_NOT_HAVE_INSTANCE("M24", MessageType.ERROR),
+    YOU_NOT_HAVE_INSTANCE("M25", MessageType.ERROR),;
 
     private final String code;
     private final MessageType type;
