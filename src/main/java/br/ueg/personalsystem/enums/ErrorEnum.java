@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorEnum implements MessageCode {
+    GENERAL_ERROR("M0", MessageType.ERROR),
     MANDATORY_FIELD("M1", MessageType.ERROR),
     PASSWORDS_DIFFERENT("M2", MessageType.ERROR),
     PASSWORD_INVALID("M3", MessageType.ERROR),
@@ -22,7 +23,6 @@ public enum ErrorEnum implements MessageCode {
     CPF_INVALID("M12", MessageType.ERROR),
     PATIENT_VALUE_HOUR_INVALID("M13", MessageType.ERROR),
     CEP_INVALID("M14", MessageType.ERROR),
-    // Novos códigos de erro para Anamnese
     INVALID_WEIGHT("M15", MessageType.ERROR),
     INVALID_HEIGHT("M16", MessageType.ERROR),
     INVALID_WAIST_CIRCUMFERENCE("M17", MessageType.ERROR),
@@ -30,7 +30,10 @@ public enum ErrorEnum implements MessageCode {
     INVALID_BODY_FAT_PERCENTAGE("M19", MessageType.ERROR),
     INVALID_MUSCLE_MASS("M20", MessageType.ERROR),
     INVALID_BODY_MASS_INDEX("M21", MessageType.ERROR),
-    INVALID_WAIST_HIP_RATIO("M22", MessageType.ERROR);
+    INVALID_WAIST_HIP_RATIO("M22", MessageType.ERROR),
+    USER_HASH_INSTANCE("M23", MessageType.ERROR),
+    USER_NOT_HAVE_INSTANCE("M24", MessageType.ERROR),
+    YOU_NOT_HAVE_INSTANCE("M25", MessageType.ERROR),;
 
     private final String code;
     private final MessageType type;

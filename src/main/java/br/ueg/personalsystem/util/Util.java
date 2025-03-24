@@ -2,7 +2,9 @@ package br.ueg.personalsystem.util;
 
 import br.com.caelum.stella.ValidationMessage;
 import br.com.caelum.stella.validation.CPFValidator;
+import br.ueg.personalsystem.base.dto.CredentialDTO;
 import br.ueg.personalsystem.enums.ErrorEnum;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +90,13 @@ public class Util {
         }
 
         return errors;
+    }
+
+    public static Long getIdUserLogged() {
+        return ((CredentialDTO) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getId();
+    }
+
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
     }
 }

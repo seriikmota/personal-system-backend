@@ -5,6 +5,7 @@ import br.ueg.personalsystem.base.service.impl.AbstractService;
 import br.ueg.personalsystem.dto.list.UserListDTO;
 import br.ueg.personalsystem.dto.request.UserRequestDTO;
 import br.ueg.personalsystem.dto.response.UserResponseDTO;
+import br.ueg.personalsystem.entities.EvolutionInstance;
 import br.ueg.personalsystem.entities.User;
 import br.ueg.personalsystem.enums.ErrorEnum;
 import br.ueg.personalsystem.mapper.UserMapper;
@@ -60,5 +61,10 @@ public class UserService extends AbstractService<UserRequestDTO, UserResponseDTO
     private String encryptPassword(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
+    }
+
+    @Override
+    public EvolutionInstance getEvolutionInstanceByUserId(Long userId) {
+        return repository.getEvolutionInstanceByUserId(userId);
     }
 }

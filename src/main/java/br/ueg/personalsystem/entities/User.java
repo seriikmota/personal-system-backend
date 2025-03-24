@@ -37,4 +37,10 @@ public class User implements GenericModel<Long> {
 
     @Column(nullable = false)
     private Boolean enabled;
+
+    @Column(nullable = true, unique = true)
+    private String apiKeyEvolution;
+
+    @Column(nullable = true, unique = true)
+    private String instanceNameEvolution;
 }
