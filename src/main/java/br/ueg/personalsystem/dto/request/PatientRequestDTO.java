@@ -58,6 +58,8 @@ public class PatientRequestDTO {
     @MandatoryField(name = "Valor por hora/aula")
     private Double valueForHour;
 
+    private Integer classesPerMonth;
+
     @MandatoryField(name = "Status")
     private Boolean enabled;
 }

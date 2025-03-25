@@ -60,6 +60,9 @@ public class Patient implements GenericModel<Long> {
     private Double valueForHour;
 
     @Column(nullable = true)
+    private Integer classesPerMonth;
+
+    @Column(nullable = true)
     private String healthPlan;
 
     @Column(nullable = false)
