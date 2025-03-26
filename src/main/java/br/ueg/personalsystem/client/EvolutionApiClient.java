@@ -7,6 +7,8 @@ import br.ueg.personalsystem.dto.evolution.CreateInstanceResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @FeignClient(name = "evolutionApiClient", url = "${url_evolutionapi}")
 public interface EvolutionApiClient {
 
@@ -28,4 +30,10 @@ public interface EvolutionApiClient {
     @GetMapping("/instance/connectionState/{instanceName}")
     ConnectionStatusDTO connectionStatus(@RequestHeader(value = "apiKey") String apiKey, @PathVariable(value = "instanceName") String instanceName);
 
+    @PostMapping("/message/sendText/{instance}")
+    Object sendMessage(
+            @RequestHeader(value = "apiKey") String apiKey,
+            @PathVariable(value = "instance") String instance,
+            @RequestBody Map<String, Object> messagePayload
+    );
 }

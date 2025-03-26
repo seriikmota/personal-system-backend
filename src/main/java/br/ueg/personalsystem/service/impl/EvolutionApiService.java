@@ -1,15 +1,8 @@
 package br.ueg.personalsystem.service.impl;
 
-import br.ueg.personalsystem.base.enums.ApiErrorEnum;
 import br.ueg.personalsystem.base.exception.BusinessException;
-import br.ueg.personalsystem.base.exception.Message;
-import br.ueg.personalsystem.base.exception.MessageResponse;
-import br.ueg.personalsystem.base.reflection.ApiReflectionUtils;
 import br.ueg.personalsystem.client.EvolutionApiClient;
-import br.ueg.personalsystem.dto.evolution.ConnectInstanceResponseDTO;
-import br.ueg.personalsystem.dto.evolution.ConnectionStatusDTO;
-import br.ueg.personalsystem.dto.evolution.CreateInstanceRequestDTO;
-import br.ueg.personalsystem.dto.evolution.CreateInstanceResponseDTO;
+import br.ueg.personalsystem.dto.evolution.*;
 import br.ueg.personalsystem.entities.EvolutionInstance;
 import br.ueg.personalsystem.entities.User;
 import br.ueg.personalsystem.enums.ErrorEnum;
@@ -18,11 +11,10 @@ import br.ueg.personalsystem.service.IUserService;
 import br.ueg.personalsystem.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EvolutionApiService implements IEvolutionApiService {
@@ -103,5 +95,19 @@ public class EvolutionApiService implements IEvolutionApiService {
 
     public Boolean instanceIsValid(EvolutionInstance instance) {
         return instance != null && !Util.isNullOrEmpty(instance.getInstanceName()) && !Util.isNullOrEmpty(instance.getInstanceApiKey());
+    }
+
+    public void sendMessage(String instanceName, String number, String text) {
+        EvolutionInstance instance = userService.getEvolutionInstanceByUserId(Util.getIdUserLogged());
+
+        if (instance == null || Util.isNullOrEmpty(instance.getInstanceName()) || Util.isNullOrEmpty(instance.getInstanceApiKey())) {
+            throw new BusinessException(ErrorEnum.YOU_NOT_HAVE_INSTANCE);
+        }
+
+        Map<String, Object> messagePayload = new HashMap<>();
+        messagePayload.put("number", number);
+        messagePayload.put("text", text);
+
+        client.sendMessage(instance.getInstanceApiKey(), instanceName, messagePayload);
     }
 }

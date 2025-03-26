@@ -10,4 +10,5 @@ public interface IEvolutionApiService {
     ConnectInstanceResponseDTO connectInstance();
     void logoutInstance();
     ConnectionStatusDTO connectionStatus();
+    void sendMessage(String instanceName, String number, String text);
 }

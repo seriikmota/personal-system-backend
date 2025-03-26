@@ -60,4 +60,10 @@ public class EvolutionApiController implements IEvolutionApiController {
         ConnectionStatusDTO responseDTO = service.connectionStatus();
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
+
+    @PostMapping("/sendMessage")
+    public ResponseEntity<?> sendMessage(@RequestParam String instanceName, @RequestParam String number, @RequestParam String text) {
+        service.sendMessage(instanceName, number, text);
+        return ResponseEntity.ok("Mensagem enviada com sucesso!");
+    }
 }
