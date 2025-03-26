@@ -25,9 +25,6 @@ public class AnamneseService extends AbstractService<AnamneseRequestDTO, Anamnes
     @Autowired
     private AnamneseRepository repository;
 
-    @Autowired
-    private PatientRepository patientRepository;
-
     public Page<Anamnese> search(Long patientId, LocalDate startDate, LocalDate endDate, Pageable pageable) {
         return repository.searchAnamnese(patientId, startDate, endDate, pageable);
     }
