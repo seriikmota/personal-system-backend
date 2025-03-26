@@ -11,4 +11,5 @@ public interface IEvolutionApiService {
     void logoutInstance();
     ConnectionStatusDTO connectionStatus();
     void sendMessage(String instanceName, String number, String text);
+    Boolean checkIsWhatsApp(String number);
 }

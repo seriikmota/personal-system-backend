@@ -66,4 +66,10 @@ public class EvolutionApiController implements IEvolutionApiController {
         service.sendMessage(instanceName, number, text);
         return ResponseEntity.ok("Mensagem enviada com sucesso!");
     }
+
+    @GetMapping("/checkIsWhatsApp")
+    public ResponseEntity<Boolean> checkIsWhatsApp(@RequestParam String number) {
+        Boolean isWhatsApp = service.checkIsWhatsApp(number);
+        return ResponseEntity.ok(isWhatsApp);
+    }
 }

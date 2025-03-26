@@ -36,4 +36,10 @@ public interface EvolutionApiClient {
             @PathVariable(value = "instance") String instance,
             @RequestBody Map<String, Object> messagePayload
     );
+
+    @PostMapping("/chat/checkIsWhatsApp")
+    Object checkIsWhatsApp(
+            @RequestHeader(value = "apiKey") String apiKey,
+            @RequestBody Map<String, Object> payload
+    );
 }

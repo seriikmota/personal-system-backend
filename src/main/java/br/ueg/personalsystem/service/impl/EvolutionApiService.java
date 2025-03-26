@@ -110,4 +110,19 @@ public class EvolutionApiService implements IEvolutionApiService {
 
         client.sendMessage(instance.getInstanceApiKey(), instanceName, messagePayload);
     }
+
+    public Boolean checkIsWhatsApp(String number) {
+        EvolutionInstance instance = userService.getEvolutionInstanceByUserId(Util.getIdUserLogged());
+
+        if (instance == null || Util.isNullOrEmpty(instance.getInstanceName()) || Util.isNullOrEmpty(instance.getInstanceApiKey())) {
+            throw new BusinessException(ErrorEnum.YOU_NOT_HAVE_INSTANCE);
+        }
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("number", number);
+
+        Object response = client.checkIsWhatsApp(instance.getInstanceApiKey(), payload);
+
+        return response instanceof Boolean && (Boolean) response; // para evitar nulos
+    }
 }
