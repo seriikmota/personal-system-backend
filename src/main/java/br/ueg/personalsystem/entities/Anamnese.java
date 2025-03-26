@@ -40,27 +40,26 @@ public class Anamnese implements GenericModel<Long> {
     private String observations;
 
     @Column(nullable = false)
-    private Double weight; // Peso em kg
+    private Double weight;
 
     @Column(nullable = false)
-    private Double height; // Altura em metros
+    private Double height;
 
     @Column(nullable = false)
-    private Double waistCircumference; // Circunferência da cintura em cm
+    private Double waistCircumference;
 
     @Column(nullable = false)
-    private Double hipCircumference; // Circunferência do quadril em cm
+    private Double hipCircumference;
 
     @Column(nullable = false)
-    private Double bodyFatPercentage; // Percentual de gordura corporal
+    private Double bodyFatPercentage;
 
     @Column(nullable = false)
     private Double muscleMass;
 
     @Column(nullable = false)
-    private Double bodyMassIndex; // IMC (calculado ou persistido)
-
+    private Double bodyMassIndex;
     @Column(nullable = false)
-    private Double waistHipRatio; // Relação cintura/quadril (calculado ou persistido)
+    private Double waistHipRatio;
 }
 
