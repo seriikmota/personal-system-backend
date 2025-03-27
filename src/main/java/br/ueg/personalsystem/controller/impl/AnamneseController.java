@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("${api.version}/anmnese")
+@RequestMapping("${api.version}/anamnese")
 public class AnamneseController extends AbstractCrudController<AnamneseRequestDTO, AnamneseResponseDTO, AnamneseListDTO, Anamnese, AnamneseService, AnamneseMapper, Long>
         implements IAnamneseController {
 
-    @GetMapping(path = "/anamnese/search")
+    @GetMapping(path = "/search")
     @PreAuthorize("hasRole(#root.this.getRoleName('LISTALL'))")
     public ResponseEntity<Page<AnamneseListDTO>> searchAnamnese(@RequestParam(required = false) Long patientId, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate, Pageable pageable) {
         Page<AnamneseListDTO> anamneses = service.search(patientId, startDate, endDate, pageable).map(obj->mapper.toDTOList(obj));
