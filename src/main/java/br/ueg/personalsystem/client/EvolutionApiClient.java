@@ -1,9 +1,6 @@
 package br.ueg.personalsystem.client;
 
-import br.ueg.personalsystem.dto.evolution.ConnectInstanceResponseDTO;
-import br.ueg.personalsystem.dto.evolution.ConnectionStatusDTO;
-import br.ueg.personalsystem.dto.evolution.CreateInstanceRequestDTO;
-import br.ueg.personalsystem.dto.evolution.CreateInstanceResponseDTO;
+import br.ueg.personalsystem.dto.evolution.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,4 +25,6 @@ public interface EvolutionApiClient {
     @GetMapping("/instance/connectionState/{instanceName}")
     ConnectionStatusDTO connectionStatus(@RequestHeader(value = "apiKey") String apiKey, @PathVariable(value = "instanceName") String instanceName);
 
+    @PostMapping("/message/sendText/{instanceName}")
+    Object sendMessage(@RequestHeader(value = "apiKey") String apiKey, @PathVariable(value = "instanceName") String instanceName, @RequestBody EvolutionSendMessageDTO evolutionSendMessageDTO);
 }

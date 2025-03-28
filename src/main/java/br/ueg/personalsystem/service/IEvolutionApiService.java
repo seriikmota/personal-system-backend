@@ -2,6 +2,7 @@ package br.ueg.personalsystem.service;
 
 import br.ueg.personalsystem.dto.evolution.ConnectInstanceResponseDTO;
 import br.ueg.personalsystem.dto.evolution.ConnectionStatusDTO;
+import br.ueg.personalsystem.dto.evolution.PatientSendMessageDTO;
 
 public interface IEvolutionApiService {
     Object apiInformation();
@@ -10,4 +11,5 @@ public interface IEvolutionApiService {
     ConnectInstanceResponseDTO connectInstance();
     void logoutInstance();
     ConnectionStatusDTO connectionStatus();
+    void sendMessages(PatientSendMessageDTO dto);
 }
