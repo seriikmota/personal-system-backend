@@ -25,21 +25,21 @@ public class AnamneseService extends AbstractService<AnamneseRequestDTO, Anamnes
     @Autowired
     private AnamneseRepository repository;
 
-    public Page<Anamnese> search(Long patientId, LocalDate startDate, LocalDate endDate, Pageable pageable) {
-        return repository.searchAnamnese(patientId, startDate, endDate, pageable);
+    public Page<Anamnese> search(String patientName, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+        return repository.searchAnamnese(patientName, startDate, endDate, pageable);
     }
 
     @Override
     protected void prepareToMapCreate(AnamneseRequestDTO dto) {
        dto.setBodyMassIndex(dto.getWeight() / (dto.getHeight() * dto.getHeight()));
-       dto.setWaistHipRatio(dto.getWaistCircumference()/ dto.getWaistCircumference());
+       dto.setWaistHipRatio(dto.getWaistCircumference()/ dto.getHipCircumference());
        dto.setAnamnesisDate(LocalDate.from(LocalDateTime.now()));
     }
 
     @Override
     protected void prepareToMapUpdate(AnamneseRequestDTO dto) {
         dto.setBodyMassIndex(dto.getWeight() / (dto.getHeight() * dto.getHeight()));
-        dto.setWaistHipRatio(dto.getWaistCircumference()/ dto.getWaistCircumference());
+        dto.setWaistHipRatio(dto.getWaistCircumference()/ dto.getHipCircumference());
         dto.setAnamnesisDate(LocalDate.from(LocalDateTime.now()));
     }
 

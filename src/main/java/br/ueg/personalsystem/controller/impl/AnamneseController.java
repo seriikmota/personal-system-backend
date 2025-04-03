@@ -27,8 +27,8 @@ public class AnamneseController extends AbstractCrudController<AnamneseRequestDT
 
     @GetMapping(path = "/anamnese/search")
     @PreAuthorize("hasRole(#root.this.getRoleName('LISTALL'))")
-    public ResponseEntity<Page<AnamneseListDTO>> searchAnamnese(@RequestParam(required = false) Long patientId, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate, Pageable pageable) {
-        Page<AnamneseListDTO> anamneses = service.search(patientId, startDate, endDate, pageable).map(obj->mapper.toDTOList(obj));
+    public ResponseEntity<Page<AnamneseListDTO>> searchAnamnese(@RequestParam(required = false) String patientName, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate, Pageable pageable) {
+        Page<AnamneseListDTO> anamneses = service.search(patientName, startDate, endDate, pageable).map(obj->mapper.toDTOList(obj));
         return ResponseEntity.ok(anamneses);
     }
 }

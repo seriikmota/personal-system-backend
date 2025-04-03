@@ -59,6 +59,7 @@ public class Anamnese implements GenericModel<Long> {
 
     @Column(nullable = false)
     private Double bodyMassIndex;
+
     @Column(nullable = false)
     private Double waistHipRatio;
 }
