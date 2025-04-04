@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.reflection;
 
-import br.ueg.genericarchitecture.reflection.ApiReflectionUtils;
+import br.ueg.personalsystem.base.reflection.ApiReflectionUtils;
 import br.ueg.personalsystem.annotation.*;
 import br.ueg.personalsystem.enums.ErrorEnum;
 import br.ueg.personalsystem.util.Util;

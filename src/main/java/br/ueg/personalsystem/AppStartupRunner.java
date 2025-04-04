@@ -42,7 +42,18 @@ public class AppStartupRunner implements ApplicationRunner {
                     "ROLE_PATIENT_READ",
                     "ROLE_PATIENT_UPDATE",
                     "ROLE_PATIENT_DELETE",
-                    "ROLE_PATIENT_LISTALL");
+                    "ROLE_PATIENT_LISTALL",
+                    "ROLE_ANAMNESE_CREATE",
+                    "ROLE_ANAMNESE_READ",
+                    "ROLE_ANAMNESE_UPDATE",
+                    "ROLE_ANAMNESE_DELETE",
+                    "ROLE_ANAMNESE_LISTALL",
+                    "ROLE_EVOLUTION_CREATE",
+                    "ROLE_EVOLUTION_DELETE",
+                    "ROLE_EVOLUTION_CONNECT",
+                    "ROLE_EVOLUTION_LOGOUT",
+                    "ROLE_EVOLUTION_STATUS",
+                    "ROLE_EVOLUTION_SEND_MESSAGE");
 
             List<Role> roleList = new ArrayList<>();
             for (String role : roles) {
@@ -62,6 +73,8 @@ public class AppStartupRunner implements ApplicationRunner {
                     .email("teste@gmail.com")
                     .enabled(Boolean.TRUE)
                     .userGroup(userGroup)
+//                    .apiKeyEvolution("3DBFB2F3-AD91-4ABC-9ED3-4072027EC101")
+//                    .instanceNameEvolution("Instancia Erik")
                     .build();
 
             roleRepository.saveAll(roleList);

@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.dto.request;
 
-import br.ueg.genericarchitecture.annotation.MandatoryField;
+import br.ueg.personalsystem.base.annotation.MandatoryField;
 import br.ueg.personalsystem.annotation.CPFValidate;
 import br.ueg.personalsystem.annotation.EmailValidate;
 import br.ueg.personalsystem.annotation.NumberPhoneValidate;
@@ -16,6 +16,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatientRequestDTO {
+
+    private Long id;
 
     @MandatoryField(name = "Nome")
     private String name;
@@ -55,6 +57,8 @@ public class PatientRequestDTO {
 
     @MandatoryField(name = "Valor por hora/aula")
     private Double valueForHour;
+
+    private Integer classesPerMonth;
 
     @MandatoryField(name = "Status")
     private Boolean enabled;

@@ -1,6 +1,6 @@
 package br.ueg.personalsystem.entities;
 
-import br.ueg.genericarchitecture.domain.GenericModel;
+import br.ueg.personalsystem.base.domain.GenericModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -30,6 +31,9 @@ public class Patient implements GenericModel<Long> {
 
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private Address address;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Anamnese> anamneses;
 
     @Column(nullable = false)
     private LocalDate birthDate;
@@ -54,6 +58,9 @@ public class Patient implements GenericModel<Long> {
 
     @Column(nullable = false)
     private Double valueForHour;
+
+    @Column(nullable = true)
+    private Integer classesPerMonth;
 
     @Column(nullable = true)
     private String healthPlan;

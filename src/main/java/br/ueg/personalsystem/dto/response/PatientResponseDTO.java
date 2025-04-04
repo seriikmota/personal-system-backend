@@ -25,6 +25,7 @@ public class PatientResponseDTO {
     private String emergencyNumber;
     private String profession;
     private Double valueForHour;
+    private Integer classesPerMonth;
     private String healthPlan;
     private Boolean enabled;
     private LocalDateTime createdAt;
