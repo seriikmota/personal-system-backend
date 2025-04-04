@@ -4,6 +4,7 @@ import br.ueg.personalsystem.base.exception.BusinessException;
 import br.ueg.personalsystem.client.EvolutionApiClient;
 import br.ueg.personalsystem.dto.evolution.*;
 import br.ueg.personalsystem.entities.EvolutionInstance;
+import br.ueg.personalsystem.entities.Patient;
 import br.ueg.personalsystem.entities.User;
 import br.ueg.personalsystem.enums.ErrorEnum;
 import br.ueg.personalsystem.service.IEvolutionApiService;
@@ -97,18 +98,16 @@ public class EvolutionApiService implements IEvolutionApiService {
         return instance != null && !Util.isNullOrEmpty(instance.getInstanceName()) && !Util.isNullOrEmpty(instance.getInstanceApiKey());
     }
 
-    public void sendMessage(String instanceName, String number, String text) {
+    public void sendMessages(PatientSendMessageDTO dto) {
         EvolutionInstance instance = userService.getEvolutionInstanceByUserId(Util.getIdUserLogged());
 
         if (instance == null || Util.isNullOrEmpty(instance.getInstanceName()) || Util.isNullOrEmpty(instance.getInstanceApiKey())) {
             throw new BusinessException(ErrorEnum.YOU_NOT_HAVE_INSTANCE);
         }
 
-        Map<String, Object> messagePayload = new HashMap<>();
-        messagePayload.put("number", number);
-        messagePayload.put("text", text);
-
-        client.sendMessage(instance.getInstanceApiKey(), instanceName, messagePayload);
+        for (Patient patient : dto.getPatients()) {
+            client.sendMessage(instance.getInstanceApiKey(), instance.getInstanceName(), new EvolutionSendMessageDTO("55"+patient.getPhoneNumber(), dto.getMessage()));
+        }
     }
 
     public Boolean checkIsWhatsApp(String number) {
