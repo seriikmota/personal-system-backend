@@ -19,8 +19,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query("SELECT p FROM Patient p WHERE (:name IS NULL OR LOWER(p.name) LIKE %:name%) AND (:cpf IS NULL OR p.cpf LIKE %:cpf%)")
     Page<Patient> searchByNameLikeAndCpfLike(@Param("name") String name, @Param("cpf") String cpf, Pageable pageable);
 
-
-    // 🔥 Melhorando busca por nome e CPF com CONCAT para evitar erros de LIKE
     @Query("""
         SELECT p FROM Patient p
         WHERE (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')))
@@ -28,7 +26,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     """)
     Page<Patient> searchByNameAndCpf(@Param("name") String name, @Param("cpf") String cpf, Pageable pageable);
 
-    // 🔥 Melhorando a busca por aniversariantes diários e mensais com LocalDate
     @Query("""
         SELECT new br.ueg.personalsystem.dto.report.BirthdayDTO(p.id, p.name, p.birthDate)
         FROM Patient p
@@ -44,7 +41,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     """)
     List<BirthdayDTO> findMonthlyBirthdays();
 
-    // 🔥 Otimizando contagem de clientes com ou sem Anamnese
     @Query("""
         SELECT COUNT(p) FROM Patient p JOIN p.anamneses a
     """)
@@ -55,14 +51,12 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     """)
     Long countClientsWithoutAnamnese();
 
-    // 🔥 Melhorando contagem de clientes por profissão
     @Query("""
         SELECT new br.ueg.personalsystem.dto.report.ClientsBySubscriptionDTO(p.profession, COUNT(p))
         FROM Patient p GROUP BY p.profession
     """)
     List<ClientsBySubscriptionDTO> findClientsBySubscription();
 
-    // 🔥 Corrigindo TIMESTAMPDIFF para cálculo da idade
     @Query("""
         SELECT new br.ueg.personalsystem.dto.report.ClientsByAgeDTO(
             CAST(YEAR(CURRENT_DATE) - YEAR(p.birthDate) AS string), COUNT(p))
@@ -70,7 +64,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     """)
     List<ClientsByAgeDTO> findClientsByAge();
 
-    // 🔥 Melhorando contagem por cidade, garantindo JOIN correto
     @Query("""
         SELECT new br.ueg.personalsystem.dto.report.ClientsByCityDTO(a.city, COUNT(p))
         FROM Patient p JOIN p.address a GROUP BY a.city
@@ -85,8 +78,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 """)
     List<ClientGrowthDTO> findClientGrowthWithAnamnese();
 
-
-    // 🔥 Melhorando crescimento de clientes ativos, garantindo conversão correta da data
     @Query("""
         SELECT new br.ueg.personalsystem.dto.report.ClientGrowthDTO(
             CAST(p.createdAt AS LocalDate), COUNT(p))

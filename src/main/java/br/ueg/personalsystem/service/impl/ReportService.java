@@ -24,9 +24,10 @@ public class ReportService implements IReportService {
 
     @Override
     public ClientsByGenderDTO getClientsByGender() {
-        Long maleClients = patientRepository.countByGender("Male");
-        Long femaleClients = patientRepository.countByGender("Female");
-        return new ClientsByGenderDTO(maleClients, femaleClients);
+        Long maleClients = patientRepository.countByGender("Masculino");
+        Long femaleClients = patientRepository.countByGender("Feminino");
+        Long otherClients = patientRepository.countByGender("Outros");
+        return new ClientsByGenderDTO(maleClients, femaleClients, otherClients);
     }
 
     @Override

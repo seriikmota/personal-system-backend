@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class ClientsByGenderDTO {
     private Long maleClients;
     private Long femaleClients;
+    private Long otherClients;
 }
