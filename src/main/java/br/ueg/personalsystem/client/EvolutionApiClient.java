@@ -1,9 +1,6 @@
 package br.ueg.personalsystem.client;
 
-import br.ueg.personalsystem.dto.evolution.ConnectInstanceResponseDTO;
-import br.ueg.personalsystem.dto.evolution.ConnectionStatusDTO;
-import br.ueg.personalsystem.dto.evolution.CreateInstanceRequestDTO;
-import br.ueg.personalsystem.dto.evolution.CreateInstanceResponseDTO;
+import br.ueg.personalsystem.dto.evolution.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +31,7 @@ public interface EvolutionApiClient {
     Object sendMessage(
             @RequestHeader(value = "apiKey") String apiKey,
             @PathVariable(value = "instance") String instance,
-            @RequestBody Map<String, Object> messagePayload
+            @RequestBody EvolutionSendMessageDTO evolutionSendMessageDTO
     );
 
     @PostMapping("/chat/checkIsWhatsApp")

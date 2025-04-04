@@ -3,6 +3,7 @@ package br.ueg.personalsystem.controller.impl;
 import br.ueg.personalsystem.controller.IEvolutionApiController;
 import br.ueg.personalsystem.dto.evolution.ConnectInstanceResponseDTO;
 import br.ueg.personalsystem.dto.evolution.ConnectionStatusDTO;
+import br.ueg.personalsystem.dto.evolution.PatientSendMessageDTO;
 import br.ueg.personalsystem.service.IEvolutionApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,9 +63,10 @@ public class EvolutionApiController implements IEvolutionApiController {
     }
 
     @PostMapping("/sendMessage")
-    public ResponseEntity<?> sendMessage(@RequestParam String instanceName, @RequestParam String number, @RequestParam String text) {
-        service.sendMessage(instanceName, number, text);
-        return ResponseEntity.ok("Mensagem enviada com sucesso!");
+    @PreAuthorize(value = "hasRole('ROLE_USER_CREATE')")
+    public ResponseEntity<?> sendMessage(@RequestBody PatientSendMessageDTO dto) {
+        service.sendMessages(dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/checkIsWhatsApp")
