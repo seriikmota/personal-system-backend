@@ -43,10 +43,4 @@ public class User implements GenericModel<Long> {
 
     @Column(nullable = true, unique = true)
     private String instanceNameEvolution;
-
-    @Column(nullable = true, unique = true)
-    private String privateKey;
-
-    @Column(nullable = true, unique = true)
-    private String publicKey;
 }
