@@ -26,6 +26,7 @@ public class ApiWebConfig {
         config.addAllowedOriginPattern("https://*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.addExposedHeader("Content-Disposition");
         return config;
     }
 }

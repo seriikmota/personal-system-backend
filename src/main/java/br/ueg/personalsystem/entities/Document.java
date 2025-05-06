@@ -26,7 +26,7 @@ public class Document {
     @Column(nullable = false)
     private String hash;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String signature;
 
     @Column(nullable = false)

@@ -22,7 +22,7 @@ public class SecurityConfig extends ApiSecurityConfig {
 
     @Override
     protected List<String> getCustomFreeAccess() {
-        return List.of();
+        return List.of(apiBase.concat("/anamnese/validate"));
     }
 
     @Override

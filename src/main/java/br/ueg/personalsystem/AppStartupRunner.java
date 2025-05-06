@@ -50,6 +50,7 @@ public class AppStartupRunner implements ApplicationRunner {
                     "ROLE_ANAMNESE_UPDATE",
                     "ROLE_ANAMNESE_DELETE",
                     "ROLE_ANAMNESE_LISTALL",
+                    "ROLE_ANAMNESE_EXPORT",
                     "ROLE_EVOLUTION_CREATE",
                     "ROLE_EVOLUTION_DELETE",
                     "ROLE_EVOLUTION_CONNECT",
