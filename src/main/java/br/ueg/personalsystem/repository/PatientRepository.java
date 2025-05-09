@@ -42,13 +42,16 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     List<BirthdayDTO> findMonthlyBirthdays();
 
     @Query("""
-        SELECT COUNT(p) FROM Patient p JOIN p.anamneses a
-    """)
+    SELECT COUNT(DISTINCT a.patient.id) 
+    FROM Anamnese a
+""")
     Long countClientsWithAnamnese();
 
     @Query("""
-        SELECT COUNT(p) FROM Patient p WHERE p.id NOT IN (SELECT a.patient.id FROM Anamnese a)
-    """)
+    SELECT COUNT(p) 
+    FROM Patient p 
+    WHERE p.id NOT IN (SELECT DISTINCT a.patient.id FROM Anamnese a)
+""")
     Long countClientsWithoutAnamnese();
 
     @Query("""
@@ -70,18 +73,10 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     """)
     List<ClientsByCityDTO> findClientsByCity();
 
-    @Query("""
-    SELECT new br.ueg.personalsystem.dto.report.ClientGrowthDTO(CAST(p.createdAt AS LocalDate), COUNT(p))
-    FROM Patient p 
-    JOIN p.anamneses a 
-    GROUP BY CAST(p.createdAt AS LocalDate)
-""")
-    List<ClientGrowthDTO> findClientGrowthWithAnamnese();
-
-    @Query("""
-        SELECT new br.ueg.personalsystem.dto.report.ClientGrowthDTO(
-            CAST(p.createdAt AS LocalDate), COUNT(p))
-        FROM Patient p WHERE p.enabled = true GROUP BY CAST(p.createdAt AS LocalDate)
-    """)
-    List<ClientGrowthDTO> findActiveClientGrowth();
+//    @Query("""
+//        SELECT new br.ueg.personalsystem.dto.report.ClientGrowthDTO(
+//            CAST(p.createdAt AS LocalDate), COUNT(p))
+//        FROM Patient p WHERE p.enabled = true GROUP BY CAST(p.createdAt AS LocalDate)
+//    """)
+//    List<AnamneseCountByDayDTO> findActiveClientGrowth();
 }
