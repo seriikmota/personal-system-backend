@@ -13,6 +13,7 @@ public interface IReportService {
     List<ClientsBySubscriptionDTO> getClientsBySubscription();
     List<ClientsByAgeDTO> getClientsByAge();
     List<ClientsByCityDTO> getClientsByCity();
-    List<ClientGrowthDTO> getClientGrowthWithAnamnese();
-    List<ClientGrowthDTO> getActiveClientGrowth();
+    List<AnamneseCountByDayDTO> getClientGrowthWithAnamnese();
+//    List<AnamneseCountByDayDTO> getActiveClientGrowth();
+    ProfitEstimateDTO getMonthlyProfitEstimate();
 }
