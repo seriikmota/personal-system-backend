@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -30,7 +31,7 @@ public class Document {
     private String signature;
 
     @Column(nullable = false)
-    private LocalDate signedDate;
+    private LocalDateTime signedDate;
 
     @ManyToOne(optional = false)
     @JoinColumn()

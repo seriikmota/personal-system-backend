@@ -15,6 +15,8 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 @Service
@@ -46,7 +48,7 @@ public class SignatureService implements ISignatureService {
             document.setName(filename);
             document.setHash(generateSHA256Hash(hashBytes));
             document.setSignature(Base64.getEncoder().encodeToString(signature.sign()));
-            document.setSignedDate(LocalDate.now());
+            document.setSignedDate(LocalDateTime.now());
             document.setSignedUser(user);
 
             documentRepository.save(document);
@@ -65,7 +67,7 @@ public class SignatureService implements ISignatureService {
 
             String hash = generateSHA256Hash(hashBytes);
             if (documentRepository.existsDocumentByHash(hash) || documentRepository.existsDocumentByName(filename)) {
-                Document document = documentRepository.findFirstByHash(hash);
+                Document document = documentRepository.findFirstByHashOrderByIdDesc(hash);
                 if (document == null) { document = documentRepository.findFirstByName(filename); }
 
                 byte[] publicBytes = Base64.getDecoder().decode(document.getSignedUser().getPublicKey());
@@ -78,7 +80,8 @@ public class SignatureService implements ISignatureService {
 
                 byte[] signatureBytes = Base64.getDecoder().decode(document.getSignature());
                 if (signature.verify(signatureBytes)) {
-                    return "Documento assinado válido";
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                    return "Documento assinado válido. Assinado por " + document.getSignedUser().getName() + " em " + document.getSignedDate().format(formatter);
                 } else {
                     return "Documento foi corrompido e não está coerente com a assinatura";
                 }

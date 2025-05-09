@@ -90,9 +90,31 @@ public class AppStartupRunner implements ApplicationRunner {
                     .privateKey(privateKeyBase64)
                     .build();
 
+
+
+            KeyPair keyPair2 = keyPairGenerator.generateKeyPair();
+            PublicKey publicKey2 = keyPair2.getPublic();
+            PrivateKey privateKey2 = keyPair2.getPrivate();
+
+            String publicKeyBase642 = Base64.getEncoder().encodeToString(publicKey2.getEncoded());
+            String privateKeyBase642 = Base64.getEncoder().encodeToString(privateKey2.getEncoded());
+
+
+            User user2 = User.builder()
+                    .name("Erik de Sousa")
+                    .login("erik")
+                    .password("$2y$10$1MgdNcIduZBhvlTym.PKje0nDX54UVS28jTa2U3lB3JvrqAj4fAdq") // Senha == admin
+                    .email("teste2@gmail.com")
+                    .enabled(Boolean.TRUE)
+                    .userGroup(userGroup)
+                    .publicKey(publicKeyBase642)
+                    .privateKey(privateKeyBase642)
+                    .build();
+
             roleRepository.saveAll(roleList);
             userGroupRepository.save(userGroup);
             userRepository.save(user);
+            userRepository.save(user2);
         }
     }
 

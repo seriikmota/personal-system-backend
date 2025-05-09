@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DocumentRepository extends JpaRepository<Document, Long> {
     boolean existsDocumentByHash(String hash);
     boolean existsDocumentByName(String name);
-    Document findFirstByHash(String hash);
+    Document findFirstByHashOrderByIdDesc(String hash);
     Document findFirstByName(String filename);
 }
