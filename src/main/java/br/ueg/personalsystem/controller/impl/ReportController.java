@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("${api.version}/reports")
@@ -58,12 +59,17 @@ public class ReportController {
     }
 
     @GetMapping("/client-growth-with-anamnese")
-    public ResponseEntity<List<ClientGrowthDTO>> getClientGrowthWithAnamnese() {
+    public ResponseEntity<List<AnamneseCountByDayDTO>> getClientGrowthWithAnamnese() {
         return ResponseEntity.ok(reportService.getClientGrowthWithAnamnese());
     }
 
-    @GetMapping("/active-client-growth")
-    public ResponseEntity<List<ClientGrowthDTO>> getActiveClientGrowth() {
-        return ResponseEntity.ok(reportService.getActiveClientGrowth());
+    @GetMapping("/monthly-profit-estimate")
+    public ResponseEntity<ProfitEstimateDTO> getMonthlyProfitEstimate() {
+        return ResponseEntity.ok(reportService.getMonthlyProfitEstimate());
     }
+
+//    @GetMapping("/active-client-growth")
+//    public ResponseEntity<List<AnamneseCountByDayDTO>> getActiveClientGrowth() {
+//        return ResponseEntity.ok(reportService.getActiveClientGrowth());
+//    }
 }
