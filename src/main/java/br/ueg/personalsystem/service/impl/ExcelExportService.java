@@ -24,7 +24,7 @@ public class ExcelExportService {
             CellStyle numberStyle = workbook.createCellStyle();
             numberStyle.setDataFormat(workbook.createDataFormat().getFormat("0.00"));
 
-            criarAba(workbook, "Relatório de Pacientes",
+            criarAba(workbook, "Relatório de Clientes",
                     new String[]{"Nome", "CPF", "E-mail", "Telefone", "Data de Nascimento"},
                     pacientes, (row, paciente) -> {
                         String dataNascimento = (paciente.getBirthDate() != null) ? paciente.getBirthDate().format(DATE_FORMATTER) : "N/A";
@@ -69,9 +69,6 @@ public class ExcelExportService {
         }
     }
 
-    /**
-     * Método auxiliar para criar uma célula com valor numérico e aplicar um estilo.
-     */
     private void createNumericCell(Row row, int column, double value, CellStyle style) {
         Cell cell = row.createCell(column);
         cell.setCellValue(value);
