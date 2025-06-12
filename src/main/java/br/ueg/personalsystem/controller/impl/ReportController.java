@@ -1,12 +1,26 @@
 package br.ueg.personalsystem.controller.impl;
 
 import br.ueg.personalsystem.dto.report.*;
+import br.ueg.personalsystem.entities.Anamnese;
+import br.ueg.personalsystem.entities.Patient;
+import br.ueg.personalsystem.repository.AnamneseRepository;
+import br.ueg.personalsystem.repository.PatientRepository;
 import br.ueg.personalsystem.service.IReportService;
+import br.ueg.personalsystem.service.impl.ExcelExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.http.HttpHeaders;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +31,15 @@ public class ReportController {
 
     @Autowired
     private IReportService reportService;
+
+    @Autowired
+    private ExcelExportService excelExportService;
+
+    @Autowired
+    private AnamneseRepository anamneseRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     @GetMapping("/active-inactive-clients")
     public ResponseEntity<ActiveInactiveClientsDTO> getActiveInactiveClients() {
@@ -68,8 +91,25 @@ public class ReportController {
         return ResponseEntity.ok(reportService.getMonthlyProfitEstimate());
     }
 
-//    @GetMapping("/active-client-growth")
-//    public ResponseEntity<List<AnamneseCountByDayDTO>> getActiveClientGrowth() {
-//        return ResponseEntity.ok(reportService.getActiveClientGrowth());
-//    }
+    @GetMapping("/exportar/excel")
+    public ResponseEntity<byte[]> exportarExcel() {
+        try {
+            List<Anamnese> anamneses = anamneseRepository.findAll();
+            List<Patient> pacientes = patientRepository.findAll();
+
+            byte[] xlsxContent = excelExportService.criarPlanilhaXLSX(anamneses, pacientes);
+
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+            String fileName = "Relatorio_Anamnese_Clientes_" + timestamp + ".xlsx";
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+            headers.setContentDispositionFormData("attachment", fileName);
+
+            return ResponseEntity.ok().headers(headers).body(xlsxContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
 }
