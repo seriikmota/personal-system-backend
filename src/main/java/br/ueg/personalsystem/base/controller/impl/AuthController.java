@@ -45,13 +45,13 @@ public class AuthController extends AbstractController implements IAuthControlle
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path = "/verify-code")
+    @GetMapping(path = "/verify-code")
     public ResponseEntity<?> verifyCode(@RequestParam String email, @RequestParam String code) {
         authService.validateResetCode(email, code);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path = "/change-password")
+    @GetMapping(path = "/change-password")
     public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String code, @RequestParam String password) {
         authService.changePassword(email, code, password);
         return ResponseEntity.ok().build();
