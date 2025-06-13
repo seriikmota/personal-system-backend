@@ -13,7 +13,8 @@ public enum ApiErrorEnum implements MessageCode {
     INVALID_TOKEN("MESSAGE.LOGIN.M4", br.ueg.personalsystem.base.enums.MessageType.ERROR),
     EXPIRED_TOKEN("MESSAGE.LOGIN.M5", br.ueg.personalsystem.base.enums.MessageType.ERROR),
     MANDATORY_FIELD("MESSAGE.GENERAL.M4", br.ueg.personalsystem.base.enums.MessageType.ERROR),
-    ACCESS_DENIED("MESSAGE.LOGIN.M6", br.ueg.personalsystem.base.enums.MessageType.ERROR);
+    ACCESS_DENIED("MESSAGE.LOGIN.M6", br.ueg.personalsystem.base.enums.MessageType.ERROR),
+    INVALID_RESET_CODE("MESSAGE.LOGIN.M7", br.ueg.personalsystem.base.enums.MessageType.ERROR);
 
     private final String code;
     private final br.ueg.personalsystem.base.enums.MessageType type;
