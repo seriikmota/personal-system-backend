@@ -3,10 +3,12 @@ package br.ueg.personalsystem.base.service.impl;
 import br.ueg.personalsystem.base.config.Constants;
 import br.ueg.personalsystem.base.dto.AuthDTO;
 import br.ueg.personalsystem.base.dto.CredentialDTO;
+import br.ueg.personalsystem.base.dto.PasswordResetToken;
 import br.ueg.personalsystem.base.enums.ApiErrorEnum;
 import br.ueg.personalsystem.base.exception.SecurityException;
 import br.ueg.personalsystem.base.security.impl.KeyToken;
 import br.ueg.personalsystem.base.security.impl.TokenBuilder;
+import br.ueg.personalsystem.base.service.IEmailService;
 import br.ueg.personalsystem.base.service.IUserProviderService;
 import com.auth0.jwt.interfaces.Claim;
 import org.apache.logging.log4j.util.Strings;
@@ -16,10 +18,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AuthService {
@@ -35,6 +36,11 @@ public class AuthService {
 
     @Autowired
     private KeyToken keyToken;
+
+    @Autowired
+    private IEmailService emailService;
+
+    private final Map<String, PasswordResetToken> resetTokens = new ConcurrentHashMap<>();
 
     public CredentialDTO login(AuthDTO authDTO) {
         return loginAccess(authDTO);
@@ -179,5 +185,31 @@ public class AuthService {
             return value.replaceAll(Constants.HEADER_AUTHORIZATION_BEARER, "").trim();
         }
         return null;
+    }
+
+    public void sendPasswordRecoveryEmail(String email) {
+        CredentialDTO credential = userProviderService.getCredentialByEmail(email);
+
+        String code = String.format("%06d", new Random().nextInt(999999));
+        PasswordResetToken token = new PasswordResetToken(code, LocalDateTime.now().plusMinutes(30));
+        resetTokens.put(email, token);
+
+        emailService.sendEmail(email, "Recuperação de Senha.", "Seu código de recuperação é: " + code + ". Ele expira em 30 minutos.");
+    }
+
+    public void validateResetCode(String email, String code) {
+        PasswordResetToken token = resetTokens.get(email);
+        if (token == null || token.getExpirationTime().isBefore(LocalDateTime.now())) {
+            resetTokens.remove(email);
+            throw new SecurityException(ApiErrorEnum.INVALID_RESET_CODE);
+        }
+        if (!token.getCode().equals(code)) {
+            throw new SecurityException(ApiErrorEnum.INVALID_RESET_CODE);
+        }
+    }
+
+    public void changePassword(String email, String code, String password) {
+        validateResetCode(email, code);
+        userProviderService.changePassword(email, password);
     }
 }
