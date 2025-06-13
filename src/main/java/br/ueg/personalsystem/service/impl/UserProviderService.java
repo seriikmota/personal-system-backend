@@ -10,6 +10,7 @@ import br.ueg.personalsystem.entities.UserGroup;
 import br.ueg.personalsystem.repository.UserGroupRepository;
 import br.ueg.personalsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,5 +67,14 @@ public class UserProviderService implements IUserProviderService {
     @Override
     public void recordLog(CredentialDTO credentialDTO, String action) {
 
+    }
+
+    @Override
+    public void changePassword(String email, String password) {
+        User user = repository.findByEmail(email);
+        if (user == null) throw new BusinessException(ApiErrorEnum.LOGIN_INVALID);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(password));
+        repository.save(user);
     }
 }
